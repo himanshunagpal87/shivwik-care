@@ -25,6 +25,7 @@
 
         window.submitted = false;
         
+        // This function handles the UI update once the form is submitted to the hidden iframe
         window.handleIframeLoad = function() {
             if (window.submitted) {
                 const successMsg = document.getElementById('success-msg');
@@ -239,11 +240,11 @@
                 <div class="bg-white rounded-2xl p-8 text-gray-900 shadow-2xl border-t-8 border-physioBlue">
                     <h3 class="text-2xl font-bold mb-6 text-gray-800">Book Appointment</h3>
                     
-                    <!-- NOTE: Form attributes are critical for Google Forms integration -->
+                    <!-- NOTE: Form action points to /formResponse for background submission -->
                     <form id="appointmentForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdXyPtX3Ak4z1tbKByhD8V8uJkjYY9uFmcV5DhSLkQ7jZqsHA/formResponse" method="POST" target="hidden_iframe">
                         
                         <div class="space-y-4">
-                            <!-- Field IDs must match exactly from Form source code -->
+                            <!-- Verified entry IDs based on your Google Form source code -->
                             <div>
                                 <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Full Name</label>
                                 <input type="text" name="entry.1691896752" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" placeholder="Enter your name" required>
@@ -276,7 +277,7 @@
                         <i class="fa-solid fa-circle-check mr-2"></i> Request received! We'll call you shortly.
                     </div>
                     
-                    <!-- This iframe handles the form submission in the background -->
+                    <!-- Hidden iframe to capture the Google Form redirect -->
                     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(typeof handleIframeLoad === 'function') handleIframeLoad();"></iframe>
                 </div>
             </div>
@@ -298,6 +299,7 @@
     </footer>
 
     <script>
+        // Toggle mobile menu
         const mobileBtn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
         if (mobileBtn) mobileBtn.addEventListener('click', () => menu.classList.toggle('open'));
@@ -309,16 +311,14 @@
             form.addEventListener('submit', function() {
                 window.submitted = true;
                 submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Processing...';
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Sending...';
                 
-                // Safety timeout to trigger success UI even if iframe onload fails
+                // Success fallback in case the iframe doesn't trigger properly
                 setTimeout(() => {
-                    if (window.submitted && !document.getElementById('success-msg').classList.contains('hidden')) {
-                        // Success UI already handled
-                    } else if (window.submitted) {
+                    if (window.submitted && document.getElementById('success-msg').classList.contains('hidden')) {
                         window.handleIframeLoad();
                     }
-                }, 4000);
+                }, 3500);
             });
         }
     </script>
