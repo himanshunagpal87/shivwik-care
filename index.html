@@ -23,25 +23,20 @@
             }
         }
 
-        window.submitted = false;
-        
-        // This function handles the UI update once the form is submitted to the hidden iframe
-        window.handleIframeLoad = function() {
-            if (window.submitted) {
-                const successMsg = document.getElementById('success-msg');
-                const submitBtn = document.getElementById('submitBtn');
-                const form = document.getElementById('appointmentForm');
-                
-                if (successMsg) successMsg.classList.remove('hidden');
-                if (submitBtn) {
-                    submitBtn.innerHTML = 'Sent Successfully';
-                    submitBtn.classList.replace('bg-physioBlue', 'bg-green-600');
-                    submitBtn.disabled = true;
-                }
-                if (form) form.reset();
-                
-                successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Global handler for form submission success
+        window.handleSuccess = function() {
+            const successMsg = document.getElementById('success-msg');
+            const submitBtn = document.getElementById('submitBtn');
+            const form = document.getElementById('appointmentForm');
+            
+            if (successMsg) successMsg.classList.remove('hidden');
+            if (submitBtn) {
+                submitBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Sent Successfully';
+                submitBtn.classList.replace('bg-physioBlue', 'bg-green-600');
+                submitBtn.disabled = true;
             }
+            if (form) form.reset();
+            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
         };
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -240,18 +235,17 @@
                 <div class="bg-white rounded-2xl p-8 text-gray-900 shadow-2xl border-t-8 border-physioBlue">
                     <h3 class="text-2xl font-bold mb-6 text-gray-800">Book Appointment</h3>
                     
-                    <!-- NOTE: Form action points to /formResponse for background submission -->
+                    <!-- REVISED: Action uses /formResponse directly with the iframe target -->
                     <form id="appointmentForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdXyPtX3Ak4z1tbKByhD8V8uJkjYY9uFmcV5DhSLkQ7jZqsHA/formResponse" method="POST" target="hidden_iframe">
                         
                         <div class="space-y-4">
-                            <!-- Verified entry IDs based on your Google Form source code -->
                             <div>
                                 <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Full Name</label>
-                                <input type="text" name="entry.1691896752" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" placeholder="Enter your name" required>
+                                <input type="text" name="entry.1691896752" id="name_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" placeholder="Enter your name" required>
                             </div>
                             <div>
                                 <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Phone Number</label>
-                                <input type="tel" name="entry.1166974658" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" placeholder="Mobile number" required>
+                                <input type="tel" name="entry.1166974658" id="phone_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" placeholder="Mobile number" required>
                             </div>
                             <div>
                                 <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Required Service</label>
@@ -264,7 +258,7 @@
                             </div>
                             <div>
                                 <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Brief Concern</label>
-                                <textarea name="entry.1065046570" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" rows="3" placeholder="How can we help?"></textarea>
+                                <textarea name="entry.1065046570" id="message_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" rows="3" placeholder="How can we help?"></textarea>
                             </div>
                         </div>
 
@@ -273,12 +267,12 @@
                         </button>
                     </form>
 
-                    <div id="success-msg" class="hidden mt-4 p-4 bg-green-50 text-green-700 rounded-xl text-center font-medium border border-green-200 animate-pulse">
+                    <div id="success-msg" class="hidden mt-4 p-4 bg-green-50 text-green-700 rounded-xl text-center font-medium border border-green-200">
                         <i class="fa-solid fa-circle-check mr-2"></i> Request received! We'll call you shortly.
                     </div>
                     
-                    <!-- Hidden iframe to capture the Google Form redirect -->
-                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(typeof handleIframeLoad === 'function') handleIframeLoad();"></iframe>
+                    <!-- The iframe is essential for the background submission to work -->
+                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(window.submitted) window.handleSuccess();"></iframe>
                 </div>
             </div>
         </div>
@@ -299,7 +293,6 @@
     </footer>
 
     <script>
-        // Toggle mobile menu
         const mobileBtn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
         if (mobileBtn) mobileBtn.addEventListener('click', () => menu.classList.toggle('open'));
@@ -313,12 +306,12 @@
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Sending...';
                 
-                // Success fallback in case the iframe doesn't trigger properly
+                // Backup UI trigger in case iframe onload is blocked by browser security
                 setTimeout(() => {
-                    if (window.submitted && document.getElementById('success-msg').classList.contains('hidden')) {
-                        window.handleIframeLoad();
+                    if (window.submitted) {
+                        window.handleSuccess();
                     }
-                }, 3500);
+                }, 2000);
             });
         }
     </script>
