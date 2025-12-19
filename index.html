@@ -63,8 +63,14 @@
             opacity: 1;
         }
         .logo-img {
-            height: 50px;
+            height: 54px;
             width: auto;
+            object-fit: contain;
+        }
+        .footer-logo {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
         }
     </style>
 </head>
@@ -76,8 +82,8 @@
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
                     <a href="#home" class="flex-shrink-0 flex items-center gap-3">
-                        <!-- Logo Placeholder: Replace 'logo.jpg' with your actual hosted image path -->
-                        <div class="bg-physioLight p-1 rounded-lg">
+                        <img src="TEMP LOGO SHIVWIK.jpg" alt="Shivwik Holistic Care Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('nav-fallback-icon').classList.remove('hidden')">
+                        <div id="nav-fallback-icon" class="hidden bg-physioLight p-1 rounded-lg">
                             <i class="fa-solid fa-hand-holding-medical text-3xl text-physioBlue"></i>
                         </div>
                         <div class="flex flex-col">
@@ -316,7 +322,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-8 border-b border-gray-700 pb-8">
                 <div class="flex items-center gap-3">
-                    <div class="bg-white p-1 rounded-lg">
+                    <img src="TEMP LOGO SHIVWIK.jpg" alt="Shivwik Holistic Care Footer Logo" class="footer-logo" onerror="this.style.display='none'; document.getElementById('footer-fallback-icon').classList.remove('hidden')">
+                    <div id="footer-fallback-icon" class="hidden bg-white p-1 rounded-lg">
                         <i class="fa-solid fa-hand-holding-medical text-2xl text-physioBlue"></i>
                     </div>
                     <div class="flex flex-col">
