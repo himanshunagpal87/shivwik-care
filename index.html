@@ -53,6 +53,12 @@
             object-fit: contain;
             filter: brightness(0) invert(1);
         }
+        .map-container iframe {
+            width: 100%;
+            height: 450px;
+            border: 0;
+            border-radius: 1rem;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 smooth-scroll">
@@ -70,11 +76,12 @@
                         </div>
                     </a>
                 </div>
-                <div class="hidden md:flex items-center space-x-8">
+                <div class="hidden md:flex items-center space-x-6">
                     <a href="#home" class="text-gray-600 hover:text-physioBlue font-medium transition">Home</a>
-                    <a href="#about" class="text-gray-600 hover:text-physioBlue font-medium transition">About Dr. Sonal</a>
-                    <a href="#services" class="text-gray-600 hover:text-physioBlue font-medium transition">Services</a>
-                    <a href="#contact" class="bg-physioBlue hover:bg-blue-600 text-white px-5 py-2.5 rounded-lg font-semibold transition shadow-sm">Book Appointment</a>
+                    <a href="#about" class="text-gray-600 hover:text-physioBlue font-medium transition">About</a>
+                    <a href="#articles" class="text-gray-600 hover:text-physioBlue font-medium transition">Articles</a>
+                    <a href="#reviews" class="text-gray-600 hover:text-physioBlue font-medium transition">Reviews</a>
+                    <a href="#contact" class="bg-physioBlue hover:bg-blue-600 text-white px-5 py-2.5 rounded-lg font-semibold transition shadow-sm">Book Now</a>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-900 focus:outline-none">
@@ -87,8 +94,9 @@
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-physioBlue hover:bg-gray-50">Home</a>
                 <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-physioBlue hover:bg-gray-50">About Dr. Sonal</a>
-                <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-physioBlue hover:bg-gray-50">Services</a>
-                <a href="#contact" class="block w-full text-center mt-4 bg-physioBlue text-white px-5 py-3 rounded-lg font-semibold shadow-md">Book Now</a>
+                <a href="#articles" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-physioBlue hover:bg-gray-50">Health Articles</a>
+                <a href="#reviews" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-physioBlue hover:bg-gray-50">Patient Reviews</a>
+                <a href="#contact" class="block w-full text-center mt-4 bg-physioBlue text-white px-5 py-3 rounded-lg font-semibold shadow-md">Book Appointment</a>
             </div>
         </div>
     </nav>
@@ -104,7 +112,7 @@
                     Advanced Physiotherapy & <br> Holistic Wellness
                 </h1>
                 <p class="text-lg md:text-xl text-gray-100 mb-8 leading-relaxed">
-                    Led by <strong>Dr. Sonal Khera Nagpal</strong> (MPT, BPT, NDDY). <br> Evidence-based rehabilitation integrated with yoga and naturopathy.
+                    Led by <strong>Dr. Sonal Khera Nagpal</strong> (MPT, BPT, NDDY). <br> Experience evidence-based rehabilitation integrated with yoga and naturopathy.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
                     <a href="#contact" class="bg-physioGreen hover:bg-green-500 text-white text-center px-8 py-3.5 rounded-lg font-bold text-lg transition shadow-lg transform hover:-translate-y-0.5">
@@ -118,25 +126,27 @@
         </div>
     </section>
 
-    <!-- Features -->
+    <!-- Clinic Info & Hours -->
     <section class="py-10 bg-physioLight -mt-10 relative z-20 mx-4 md:mx-auto max-w-7xl rounded-xl shadow-lg border-b-4 border-physioBlue">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-8 text-center md:text-left divide-y md:divide-y-0 md:divide-x divide-gray-200">
             <div class="flex items-start gap-4 p-2">
                 <div class="bg-white p-3 rounded-full shadow-sm text-physioBlue">
-                    <i class="fa-solid fa-user-doctor text-2xl"></i>
+                    <i class="fa-solid fa-clock text-2xl"></i>
                 </div>
                 <div>
-                    <h3 class="font-bold text-lg text-gray-900">Dr. Sonal Khera Nagpal</h3>
-                    <p class="text-sm text-gray-600 mt-1">MPT Cardiopulmonary Specialist (12+ Years Exp).</p>
+                    <h3 class="font-bold text-lg text-gray-900">Clinic Hours</h3>
+                    <p class="text-sm text-gray-600 mt-1">Mon - Fri: 11 AM - 1 PM</p>
+                    <p class="text-xs text-physioBlue font-semibold mt-1">Evening by Appointment Only</p>
                 </div>
             </div>
             <div class="flex items-start gap-4 p-2 pt-6 md:pt-2">
                 <div class="bg-white p-3 rounded-full shadow-sm text-physioBlue">
-                    <i class="fa-solid fa-clock text-2xl"></i>
+                    <i class="fa-solid fa-user-doctor text-2xl"></i>
                 </div>
                 <div>
-                    <h3 class="font-bold text-lg text-gray-900">Available 8 AM - 8 PM</h3>
-                    <p class="text-sm text-gray-600 mt-1">Open Mon-Sat. Dedicated evening slots.</p>
+                    <h3 class="font-bold text-lg text-gray-900">Expert Supervision</h3>
+                    <p class="text-sm text-gray-600 mt-1">Dr. Sonal Khera Nagpal</p>
+                    <p class="text-xs text-gray-500 italic">MPT Cardiopulmonary Specialist</p>
                 </div>
             </div>
             <div class="flex items-start gap-4 p-2 pt-6 md:pt-2">
@@ -151,33 +161,54 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-white">
+    <!-- Staff Articles Section -->
+    <section id="articles" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col lg:flex-row items-center gap-16">
-                <div class="lg:w-1/2">
-                    <div class="relative rounded-2xl overflow-hidden shadow-2xl">
-                         <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Dr. Sonal Khera Nagpal" class="w-full h-auto object-cover">
-                         <div class="absolute bottom-0 left-0 bg-physioBlue text-white px-6 py-4 rounded-tr-xl">
-                            <p class="font-bold text-xl">Dr. Sonal Khera Nagpal</p>
-                            <p class="text-sm opacity-90">Clinical Director (MPT, BPT, NDDY)</p>
-                         </div>
+            <div class="text-center mb-16">
+                <h4 class="text-physioBlue font-bold uppercase tracking-wider text-sm mb-2">Knowledge Hub</h4>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Daily Health Insights</h2>
+                <div class="w-20 h-1.5 bg-physioGreen mx-auto mt-4 rounded-full"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Article Card 1 -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 flex flex-col">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Yoga article" class="h-48 w-full object-cover">
+                    <div class="p-6 flex-grow">
+                        <span class="text-xs font-bold text-physioBlue bg-blue-50 px-2 py-1 rounded mb-3 inline-block">Yoga & Wellness</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">5 Daily Stretches for Back Pain</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4">Discover how simple 10-minute yoga routines can significantly reduce chronic lower back pain and improve posture...</p>
+                        <div class="mt-auto pt-4 border-t border-gray-200 flex items-center justify-between">
+                            <span class="text-xs text-gray-400 font-medium italic">By Clinic Staff</span>
+                            <span class="text-xs text-gray-400">Oct 24, 2024</span>
+                        </div>
                     </div>
                 </div>
-                <div class="lg:w-1/2">
-                    <h4 class="text-physioBlue font-bold uppercase tracking-wider text-sm mb-2">The Holistic Vision</h4>
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Expert Care Tailored To You</h2>
-                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">
-                        At <strong>Shivwik Holistic Care</strong>, we bridge the gap between clinical excellence and natural wellness. Dr. Sonal specializes in helping patients recover from complex cardiopulmonary conditions while improving overall vitality.
-                    </p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="p-4 bg-physioLight rounded-lg">
-                            <p class="font-bold text-physioBlue text-2xl">12+</p>
-                            <p class="text-sm text-gray-700">Years Clinical Exp</p>
+
+                <!-- Article Card 2 -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 flex flex-col">
+                    <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Cardio article" class="h-48 w-full object-cover">
+                    <div class="p-6 flex-grow">
+                        <span class="text-xs font-bold text-physioBlue bg-blue-50 px-2 py-1 rounded mb-3 inline-block">Cardiopulmonary Rehab</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Post-COVID Lung Recovery</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4">Breathing exercises and progressive movement protocols for restoring lung capacity after viral pneumonia...</p>
+                        <div class="mt-auto pt-4 border-t border-gray-200 flex items-center justify-between">
+                            <span class="text-xs text-gray-400 font-medium italic">By Dr. Sonal</span>
+                            <span class="text-xs text-gray-400">Oct 22, 2024</span>
                         </div>
-                        <div class="p-4 bg-physioLight rounded-lg">
-                            <p class="font-bold text-physioBlue text-2xl">MPT</p>
-                            <p class="text-sm text-gray-700">Specialist Degree</p>
+                    </div>
+                </div>
+
+                <!-- Article Card 3 -->
+                <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 flex flex-col">
+                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Naturopathy article" class="h-48 w-full object-cover">
+                    <div class="p-6 flex-grow">
+                        <span class="text-xs font-bold text-physioBlue bg-blue-50 px-2 py-1 rounded mb-3 inline-block">Naturopathy</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">The Power of Anti-Inflammatory Foods</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4">Integrating specific dietary choices to complement your physical therapy and speed up recovery from injuries...</p>
+                        <div class="mt-auto pt-4 border-t border-gray-200 flex items-center justify-between">
+                            <span class="text-xs text-gray-400 font-medium italic">By Clinic Staff</span>
+                            <span class="text-xs text-gray-400">Oct 20, 2024</span>
                         </div>
                     </div>
                 </div>
@@ -185,72 +216,130 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-20 bg-physioLight">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h4 class="text-physioBlue font-bold uppercase tracking-wider text-sm mb-2">Testimonials</h4>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">What Our Patients Say</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border-l-4 border-physioGreen">
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 italic mb-6">"Dr. Sonal's expertise in cardiopulmonary rehab is unmatched. My breathing improved significantly within 2 weeks of following her protocol."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-physioBlue text-white rounded-full flex items-center justify-center font-bold">R</div>
+                        <div>
+                            <p class="font-bold text-gray-900">Rajesh Khanna</p>
+                            <p class="text-xs text-gray-500">Patient • 1 month ago</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border-l-4 border-physioGreen">
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 italic mb-6">"Best holistic care in Paschim Vihar. The integration of yoga with physiotherapy makes a huge difference in long-term recovery."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-physioBlue text-white rounded-full flex items-center justify-center font-bold">A</div>
+                        <div>
+                            <p class="font-bold text-gray-900">Anjali Sharma</p>
+                            <p class="text-xs text-gray-500">Patient • 3 weeks ago</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border-l-4 border-physioGreen">
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 italic mb-6">"Very professional approach. Dr. Sonal takes time to explain the 'why' behind every exercise. Highly recommended for back issues."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-physioBlue text-white rounded-full flex items-center justify-center font-bold">S</div>
+                        <div>
+                            <p class="font-bold text-gray-900">Sandeep Gupta</p>
+                            <p class="text-xs text-gray-500">Patient • 2 months ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-10">
+                <a href="https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID" target="_blank" class="text-physioBlue font-bold hover:underline">Write a Review on Google →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map & Contact Section -->
     <section id="contact" class="py-20 bg-gray-900 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- Info -->
-                <div class="flex flex-col justify-center">
-                    <h2 class="text-3xl font-bold mb-8 text-physioLight">Get in Touch</h2>
-                    <div class="space-y-6">
-                        <div class="flex items-start gap-4">
-                            <i class="fa-solid fa-location-dot text-physioBlue text-xl mt-1"></i>
-                            <div>
-                                <h5 class="font-bold text-lg text-white">Clinic Address</h5>
-                                <p class="text-gray-400">2nd Floor, M39, Guru Harkishan Nagar,<br>Paschim Vihar, New Delhi, Delhi, 110087</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <i class="fa-solid fa-phone text-physioBlue text-xl mt-1"></i>
-                            <div>
-                                <h5 class="font-bold text-lg text-white">Phone / WhatsApp</h5>
-                                <p class="text-gray-400"><a href="tel:+918340006000" class="hover:text-physioBlue transition">+91 83400 06000</a></p>
-                            </div>
-                        </div>
-                        <div class="mt-8 pt-8 border-t border-gray-800">
-                             <a href="https://wa.me/918340006000" target="_blank" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full font-bold transition">
-                                <i class="fa-brands fa-whatsapp text-2xl"></i> Chat on WhatsApp
-                             </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Form Section -->
-                <div class="bg-white rounded-2xl p-8 text-gray-900 shadow-2xl border-t-8 border-physioBlue">
-                    <h3 class="text-2xl font-bold mb-6 text-gray-800">Book Appointment</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                
+                <!-- Form & Info Left -->
+                <div>
+                    <h2 class="text-3xl font-bold mb-6 text-physioLight">Book Your Visit</h2>
+                    <p class="text-gray-400 mb-8 leading-relaxed">Fill out the form below to request an appointment. Note: Evening slots are strictly by appointment only.</p>
                     
-                    <form id="appointmentForm" class="space-y-4">
-                        <div>
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Full Name</label>
-                            <input type="text" id="name_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" placeholder="Enter your name" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Phone Number</label>
-                            <input type="tel" id="phone_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" placeholder="Mobile number" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Required Service</label>
-                            <select id="service_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none">
-                                <option value="Physiotherapy Consultation">Physiotherapy Consultation</option>
-                                <option value="Cardiopulmonary Rehab">Cardiopulmonary Rehab</option>
-                                <option value="Yoga/Naturopathy">Yoga/Naturopathy</option>
-                                <option value="Home Visit Request">Home Visit Request</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Brief Concern</label>
-                            <textarea id="message_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" rows="3" placeholder="How can we help?"></textarea>
-                        </div>
+                    <div class="bg-white rounded-2xl p-8 text-gray-900 shadow-2xl border-t-8 border-physioBlue mb-8">
+                        <form id="appointmentForm" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Full Name</label>
+                                <input type="text" id="name_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" placeholder="Enter your name" required>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Phone Number</label>
+                                    <input type="tel" id="phone_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" placeholder="Mobile" required>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Service</label>
+                                    <select id="service_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none">
+                                        <option value="Physio Consultation">Physio Consultation</option>
+                                        <option value="Cardio Rehab">Cardio Rehab</option>
+                                        <option value="Home Visit">Home Visit Request</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Brief Concern</label>
+                                <textarea id="message_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" rows="2" placeholder="Describe your pain/condition"></textarea>
+                            </div>
 
-                        <button type="submit" id="submitBtn" class="w-full mt-6 bg-physioBlue hover:bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95">
-                            Submit Request
-                        </button>
-                    </form>
+                            <button type="submit" id="submitBtn" class="w-full mt-2 bg-physioBlue hover:bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95">
+                                Submit Request
+                            </button>
+                        </form>
+                    </div>
 
-                    <div id="success-msg" class="hidden mt-4 p-4 bg-blue-50 text-blue-700 rounded-xl text-center text-sm">
-                        Redirecting to complete submission...
+                    <div class="space-y-4 text-sm">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-physioBlue"></i>
+                            <a href="tel:+918340006000" class="hover:text-physioBlue">+91 83400 06000</a>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-location-dot text-physioBlue"></i>
+                            <span>2nd Floor, M39, Guru Harkishan Nagar, Paschim Vihar, Delhi 110087</span>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Google Map Right -->
+                <div class="map-container shadow-2xl">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-map-location-dot text-physioGreen"></i> Find Us
+                    </h3>
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.228562775191!2d77.0877887!3d28.6828005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d0407f0f498c3%3A0xc3191f6308552631!2sM39%2C%20Guru%20Harkishan%20Nagar%2C%20Paschim%20Vihar%2C%20New%20Delhi%2C%20Delhi%20110087!5e0!3m2!1sen!2sin!4v1700000000000" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+
             </div>
         </div>
     </section>
@@ -260,42 +349,38 @@
         <div class="max-w-7xl mx-auto px-4 text-center">
             <div class="flex flex-col items-center mb-8">
                 <img src="https://lh3.googleusercontent.com/d/18Ma5lZqQm3FZEVN903q57-bW9xQDH5CF" alt="White Logo" class="footer-logo mb-4">
-                <p class="font-bold text-xl mb-1">SHIVWIK HOLISTIC CARE</p>
-                <p class="text-physioBlue text-xs tracking-widest uppercase font-bold">Health • Healing • Harmony</p>
+                <p class="font-bold text-xl mb-1 uppercase tracking-tight">SHIVWIK HOLISTIC CARE</p>
+                <p class="text-physioBlue text-[10px] tracking-[0.2em] uppercase font-bold">Health • Healing • Harmony</p>
             </div>
             <div class="text-gray-500 text-xs">
                 <p>&copy; 2024 Shivwik Holistic Care. Dr. Sonal Khera Nagpal.</p>
+                <p class="mt-2">Clinical Hours: 11 AM - 1 PM (M-F) | Evenings by Appt.</p>
             </div>
         </div>
     </footer>
 
     <script>
+        // Mobile Menu
         const mobileBtn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
         if (mobileBtn) mobileBtn.addEventListener('click', () => menu.classList.toggle('open'));
 
+        // Form Redirect Logic
         document.getElementById('appointmentForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const submitBtn = document.getElementById('submitBtn');
-            const successMsg = document.getElementById('success-msg');
-            
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Redirecting...';
-            successMsg.classList.remove('hidden');
 
-            // Gather Data
             const name = encodeURIComponent(document.getElementById('name_field').value);
             const phone = encodeURIComponent(document.getElementById('phone_field').value);
             const service = encodeURIComponent(document.getElementById('service_field').value);
             const message = encodeURIComponent(document.getElementById('message_field').value);
 
-            // Construct the Pre-filled URL
-            // This fills the fields and allows the user to click "Submit" on Google's safe page
+            // Google Form Pre-fill URL
             const googleFormUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdXyPtX3Ak4z1tbKByhD8V8uJkjYY9uFmcV5DhSLkQ7jZqsHA/viewform?usp=pp_url&entry.1691896752=${name}&entry.1166974658=${phone}&entry.835883743=${service}&entry.1065046570=${message}`;
 
-            // Redirect to Google's page where they can click the final submit
-            // This bypasses all background blocks
             window.location.href = googleFormUrl;
         });
     </script>
