@@ -22,22 +22,6 @@
                 }
             }
         }
-
-        // Global handler for form submission success
-        window.handleSuccess = function() {
-            const successMsg = document.getElementById('success-msg');
-            const submitBtn = document.getElementById('submitBtn');
-            const form = document.getElementById('appointmentForm');
-            
-            if (successMsg) successMsg.classList.remove('hidden');
-            if (submitBtn) {
-                submitBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Sent Successfully';
-                submitBtn.classList.replace('bg-physioBlue', 'bg-green-600');
-                submitBtn.disabled = true;
-            }
-            if (form) form.reset();
-            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        };
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -235,31 +219,27 @@
                 <div class="bg-white rounded-2xl p-8 text-gray-900 shadow-2xl border-t-8 border-physioBlue">
                     <h3 class="text-2xl font-bold mb-6 text-gray-800">Book Appointment</h3>
                     
-                    <!-- REVISED: Action uses /formResponse directly with the iframe target -->
-                    <form id="appointmentForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdXyPtX3Ak4z1tbKByhD8V8uJkjYY9uFmcV5DhSLkQ7jZqsHA/formResponse" method="POST" target="hidden_iframe">
-                        
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Full Name</label>
-                                <input type="text" name="entry.1691896752" id="name_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" placeholder="Enter your name" required>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Phone Number</label>
-                                <input type="tel" name="entry.1166974658" id="phone_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" placeholder="Mobile number" required>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Required Service</label>
-                                <select name="entry.835883743" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none">
-                                    <option value="Physiotherapy Consultation">Physiotherapy Consultation</option>
-                                    <option value="Cardiopulmonary Rehab">Cardiopulmonary Rehab</option>
-                                    <option value="Yoga/Naturopathy">Yoga/Naturopathy</option>
-                                    <option value="Home Visit Request">Home Visit Request</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Brief Concern</label>
-                                <textarea name="entry.1065046570" id="message_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" rows="3" placeholder="How can we help?"></textarea>
-                            </div>
+                    <form id="appointmentForm" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Full Name</label>
+                            <input type="text" id="name_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" placeholder="Enter your name" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Phone Number</label>
+                            <input type="tel" id="phone_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" placeholder="Mobile number" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Required Service</label>
+                            <select id="service_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none">
+                                <option value="Physiotherapy Consultation">Physiotherapy Consultation</option>
+                                <option value="Cardiopulmonary Rehab">Cardiopulmonary Rehab</option>
+                                <option value="Yoga/Naturopathy">Yoga/Naturopathy</option>
+                                <option value="Home Visit Request">Home Visit Request</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Brief Concern</label>
+                            <textarea id="message_field" class="w-full border border-gray-300 px-4 py-3 rounded-lg focus:ring-2 focus:ring-physioBlue outline-none" rows="3" placeholder="How can we help?"></textarea>
                         </div>
 
                         <button type="submit" id="submitBtn" class="w-full mt-6 bg-physioBlue hover:bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95">
@@ -267,12 +247,9 @@
                         </button>
                     </form>
 
-                    <div id="success-msg" class="hidden mt-4 p-4 bg-green-50 text-green-700 rounded-xl text-center font-medium border border-green-200">
-                        <i class="fa-solid fa-circle-check mr-2"></i> Request received! We'll call you shortly.
+                    <div id="success-msg" class="hidden mt-4 p-4 bg-blue-50 text-blue-700 rounded-xl text-center text-sm">
+                        Redirecting to complete submission...
                     </div>
-                    
-                    <!-- The iframe is essential for the background submission to work -->
-                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(window.submitted) window.handleSuccess();"></iframe>
                 </div>
             </div>
         </div>
@@ -297,23 +274,30 @@
         const menu = document.getElementById('mobile-menu');
         if (mobileBtn) mobileBtn.addEventListener('click', () => menu.classList.toggle('open'));
 
-        const form = document.getElementById('appointmentForm');
-        const submitBtn = document.getElementById('submitBtn');
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.getElementById('success-msg');
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Redirecting...';
+            successMsg.classList.remove('hidden');
 
-        if (form) {
-            form.addEventListener('submit', function() {
-                window.submitted = true;
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Sending...';
-                
-                // Backup UI trigger in case iframe onload is blocked by browser security
-                setTimeout(() => {
-                    if (window.submitted) {
-                        window.handleSuccess();
-                    }
-                }, 2000);
-            });
-        }
+            // Gather Data
+            const name = encodeURIComponent(document.getElementById('name_field').value);
+            const phone = encodeURIComponent(document.getElementById('phone_field').value);
+            const service = encodeURIComponent(document.getElementById('service_field').value);
+            const message = encodeURIComponent(document.getElementById('message_field').value);
+
+            // Construct the Pre-filled URL
+            // This fills the fields and allows the user to click "Submit" on Google's safe page
+            const googleFormUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdXyPtX3Ak4z1tbKByhD8V8uJkjYY9uFmcV5DhSLkQ7jZqsHA/viewform?usp=pp_url&entry.1691896752=${name}&entry.1166974658=${phone}&entry.835883743=${service}&entry.1065046570=${message}`;
+
+            // Redirect to Google's page where they can click the final submit
+            // This bypasses all background blocks
+            window.location.href = googleFormUrl;
+        });
     </script>
 </body>
 </html>
