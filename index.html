@@ -1,397 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- SEO Primary Meta Tags -->
-    <title>Best Physiotherapist in Paschim Vihar | Shivwik Holistic Care - Dr. Sonal</title>
-    <meta name="description" content="Shivwik Holistic Care by Dr. Sonal Khera Nagpal offers advanced Physiotherapy, Cardio Rehab, and Yoga in Paschim Vihar, Delhi. Book your consultation today.">
-    <meta name="keywords" content="Physiotherapist in Paschim Vihar, Physiotherapy clinic Delhi, Dr. Sonal Khera Nagpal, Cardio Rehab Delhi, Orthopedic Physiotherapy, Holistic Healing Paschim Vihar">
-    <meta name="author" content="Dr. Sonal Khera Nagpal">
-    <link rel="canonical" href="https://www.shivwikholisticcare.com/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Social Media Meta Tags (Open Graph) -->
-    <meta property="og:title" content="Best Physiotherapist in Paschim Vihar | Shivwik Holistic Care">
-    <meta property="og:description" content="Expert Physiotherapy & Holistic Wellness integration by Dr. Sonal Khera Nagpal. Located in Paschim Vihar, Delhi.">
-    <meta property="og:image" content="https://lh3.googleusercontent.com/d/18Ma5lZqQm3FZEVN903q57-bW9xQDH5CF">
-    <meta property="og:url" content="https://www.shivwikholisticcare.com/">
-    <meta property="og:type" content="website">
+<title>We're Moving | Shivwik Holistic Care — New Clinic Opening Soon in Paschim Vihar</title>
+<meta name="description" content="Shivwik Holistic Care is relocating to a brand-new, larger facility at 182, Ambica Vihar, Paschim Vihar, New Delhi. Book an appointment or contact us — opening soon.">
+<meta name="keywords" content="Shivwik Holistic Care, physiotherapist Paschim Vihar, physiotherapy clinic Delhi, Dr Sonal Khera Nagpal, new clinic Paschim Vihar">
+<link rel="canonical" href="https://www.shivwikholisticcare.com/">
 
-    <!-- Structured Data (JSON-LD) for Local SEO -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "PhysiotherapyClinic",
-      "name": "Shivwik Holistic Care",
-      "alternateName": "Holistic Care Centre",
-      "image": "https://lh3.googleusercontent.com/d/18Ma5lZqQm3FZEVN903q57-bW9xQDH5CF",
-      "@id": "https://www.shivwikholisticcare.com/",
-      "url": "https://www.shivwikholisticcare.com/",
-      "telephone": "+918340006000",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "M39, 2nd Floor, Guru Harkishan Nagar",
-        "addressLocality": "Paschim Vihar",
-        "addressRegion": "Delhi",
-        "postalCode": "110087",
-        "addressCountry": "IN"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 28.670464,
-        "longitude": 77.087086
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
-        "opens": "11:00",
-        "closes": "13:00"
-      },
-      "sameAs": [
-        "https://wa.me/918340006000"
-      ]
-    }
-    </script>
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shivwik Holistic Care — New Clinic Opening Soon in Paschim Vihar">
+<meta property="og:description" content="We're moving to a bigger, better-equipped clinic in Paschim Vihar. Book an appointment or get in touch — same trusted care, new address.">
+<meta property="og:image" content="assets/images/logo-enhanced-onwhite.jpg">
+<meta property="og:url" content="https://www.shivwikholisticcare.com/">
+<meta name="twitter:card" content="summary_large_image">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        physioBlue: '#3E84DC',
-                        physioGreen: '#04D486',
-                        physioLight: '#EAF7FF',
-                        darkText: '#1e293b',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .smooth-scroll { scroll-behavior: smooth; }
-        .hero-bg {
-            background-image: linear-gradient(rgba(30, 41, 59, 0.7), rgba(30, 41, 59, 0.6)), url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
-        }
-        #mobile-menu {
-            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-        }
-        #mobile-menu.open {
-            max-height: 400px;
-            opacity: 1;
-        }
-        .logo-img {
-            height: 60px;
-            width: auto;
-            object-fit: contain;
-        }
-        .footer-logo {
-            height: 60px;
-            width: auto;
-            object-fit: contain;
-            filter: brightness(1.2);
-        }
-        .map-container iframe {
-            width: 100%;
-            height: 450px;
-            border: 0;
-            border-radius: 1rem;
-        }
-        .form-container {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            border-radius: 1.5rem;
-            background: white;
-        }
-        .form-container iframe {
-            width: 100%;
-            height: 800px;
-            border: none;
-        }
-    </style>
+<link rel="icon" href="assets/images/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/images/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="assets/images/favicon-180.png">
+
+<!-- LocalBusiness structured data for SEO / Google Business Profile alignment -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PhysicalTherapy",
+  "name": "Shivwik Holistic Care",
+  "image": "https://www.shivwikholisticcare.com/assets/images/logo-enhanced-onwhite.jpg",
+  "url": "https://www.shivwikholisticcare.com/",
+  "telephone": "+91-8340006000",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "182, Ambica Vihar",
+    "addressLocality": "Paschim Vihar, New Delhi",
+    "addressRegion": "Delhi",
+    "postalCode": "110087",
+    "addressCountry": "IN"
+  },
+  "founder": { "@type": "Person", "name": "Dr. Sonal Khera Nagpal", "jobTitle": "Physiotherapist, MPT (Cardiopulmonary)" },
+  "openingHours": "Mo-Fr 11:00-13:00"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-gray-50 text-gray-800 smooth-scroll">
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- Navigation -->
-    <nav class="bg-white shadow-md fixed w-full z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20">
-                <div class="flex items-center">
-                    <a href="#home" class="flex items-center gap-3">
-                        <img src="https://lh3.googleusercontent.com/d/18Ma5lZqQm3FZEVN903q57-bW9xQDH5CF" alt="Shivwik Holistic Care Logo - Paschim Vihar" class="logo-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3063/3063176.png'">
-                        <div class="flex flex-col border-l border-gray-200 pl-3">
-                            <span class="font-bold text-xl text-gray-800 leading-none tracking-tight">SHIVWIK</span>
-                            <span class="text-[10px] font-bold text-physioBlue tracking-widest uppercase">Holistic Care</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="hidden md:flex items-center space-x-6">
-                    <a href="#home" class="text-gray-600 hover:text-physioBlue font-medium transition">Home</a>
-                    <a href="#about" class="text-gray-600 hover:text-physioBlue font-medium transition">About</a>
-                    <a href="#services" class="text-gray-600 hover:text-physioBlue font-medium transition">Services</a>
-                    <a href="#articles" class="text-gray-600 hover:text-physioBlue font-medium transition">Articles</a>
-                    <a href="#contact" class="bg-physioBlue hover:bg-blue-600 text-white px-5 py-2.5 rounded-lg font-semibold transition shadow-sm">Book Now</a>
-                </div>
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-900 focus:outline-none" aria-label="Toggle menu">
-                        <i class="fa-solid fa-bars text-2xl"></i>
-                    </button>
-                </div>
-            </div>
+<header class="top-bar">
+  <div class="container top-bar-inner">
+    <a class="phone-link" href="tel:+918340006000">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg>
+      +91 8340006000
+    </a>
+    <a class="whatsapp-link" href="https://wa.me/918340006000" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5 0-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm0 18.2a8.1 8.1 0 01-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1120.2 12 8.2 8.2 0 0112 20.2z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="bg-glow" aria-hidden="true"></div>
+    <svg class="path-svg" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true">
+      <path class="path-line" d="M80,650 C300,500 350,300 600,260 C820,225 900,120 1120,90"/>
+      <circle class="path-dot" cx="80" cy="650" r="6"/>
+      <circle class="path-dot" cx="1120" cy="90" r="7"/>
+    </svg>
+
+    <div class="container hero-inner">
+      <img class="logo" src="assets/images/logo-enhanced.png" alt="Shivwik Holistic Care logo" width="640" height="261">
+
+      <span class="eyebrow"><span class="dot"></span> We're relocating</span>
+      <h1>A new clinic is <em>on its way</em></h1>
+      <p class="lede">Shivwik Holistic Care is moving to a larger, better-equipped space in Paschim Vihar — built around the same personal, evidence-based care Dr. Sonal Khera Nagpal has always offered. Opening soon.</p>
+
+      <div class="move-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s7-6.6 7-12a7 7 0 10-14 0c0 5.4 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <div>
+          <b>Moving From</b>
+          <div class="old">M39, 2nd Floor, Guru Harkishan Nagar, Paschim Vihar, Delhi 110087</div>
+          <div class="arrow-row">↓ new, larger facility</div>
+          <b style="margin-top:10px">Moving To</b>
+          <div class="new">182, Ambica Vihar, Paschim Vihar, New Delhi, Delhi 110087</div>
         </div>
-        <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-100 shadow-lg">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-physioBlue hover:bg-gray-50">Home</a>
-                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-physioBlue hover:bg-gray-50">About</a>
-                <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-physioBlue hover:bg-gray-50">Services</a>
-                <a href="#articles" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-physioBlue hover:bg-gray-50">Health Articles</a>
-                <a href="#contact" class="block w-full text-center mt-4 bg-physioBlue text-white px-5 py-3 rounded-lg font-semibold shadow-md">Book Appointment</a>
-            </div>
+      </div>
+
+      <div class="actions">
+        <a href="#booking" class="btn btn-primary">Book an Appointment</a>
+        <a href="tel:+918340006000" class="btn btn-outline">Call +91 8340006000</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING FORM -->
+  <section class="section" id="booking">
+    <div class="container split">
+      <div>
+        <span class="eyebrow eyebrow--light">Book Appointment</span>
+        <h2>Request a physiotherapy appointment</h2>
+        <p>Existing and new patients welcome — fill in your details and preferred time, and our front desk will call to confirm your slot at the new clinic. Every request is sent straight to Dr. Sonal's team.</p>
+        <div class="info-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg>
+          <div><b>Call or WhatsApp</b><a href="tel:+918340006000">+91 8340006000</a></div>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header id="home" class="relative pt-20 pb-16 md:pt-32 md:pb-24 hero-bg min-h-[600px] flex items-center">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-            <div class="md:w-2/3 lg:w-1/2 text-white">
-                <div class="inline-block bg-physioGreen bg-opacity-90 text-white text-sm font-semibold px-3 py-1 rounded-full mb-4">
-                    Paschim Vihar's Premier Holistic Rehab
-                </div>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-                    Advanced Physiotherapist in <br> Paschim Vihar, Delhi
-                </h1>
-                <p class="text-lg md:text-xl text-gray-100 mb-8 leading-relaxed">
-                    Led by <strong>Dr. Sonal Khera Nagpal</strong> (MPT, BPT, NDDY). <br> Expert rehabilitation for Orthopedic, Cardiopulmonary, and Wellness needs.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#contact" class="bg-physioGreen hover:bg-green-500 text-white text-center px-8 py-3.5 rounded-lg font-bold text-lg transition shadow-lg transform hover:-translate-y-0.5">
-                        Book Consultation
-                    </a>
-                    <a href="https://wa.me/918340006000" target="_blank" rel="noopener" class="bg-white hover:bg-gray-100 text-gray-900 text-center px-8 py-3.5 rounded-lg font-bold text-lg transition shadow-lg flex items-center justify-center gap-2">
-                        <i class="fa-brands fa-whatsapp text-green-600 text-xl"></i> WhatsApp Us
-                    </a>
-                </div>
+      </div>
+      <div class="form-card">
+        <form id="booking-form" novalidate>
+          <div class="field hp"><label>Leave blank</label><input type="text" name="_honey" tabindex="-1" autocomplete="off"></div>
+          <div class="form-row">
+            <div class="field">
+              <label for="b-name">Full Name *</label>
+              <input id="b-name" type="text" name="name" required autocomplete="name">
             </div>
+            <div class="field">
+              <label for="b-phone">Phone Number *</label>
+              <input id="b-phone" type="tel" name="phone" required autocomplete="tel" pattern="[0-9+\-\s]{7,15}">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="b-email">Email</label>
+              <input id="b-email" type="email" name="email" autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="b-service">Service *</label>
+              <select id="b-service" name="service" required>
+                <option value="">Select a service</option>
+                <option>Orthopedic &amp; Spine Rehab</option>
+                <option>Cardiopulmonary Rehabilitation</option>
+                <option>Pre &amp; Post-Natal Physiotherapy</option>
+                <option>Neurological Rehabilitation</option>
+                <option>Pain Management</option>
+                <option>Not sure — need guidance</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="b-date">Preferred Date</label>
+            <input id="b-date" type="date" name="preferred_date">
+            <small>Clinic hours: Mon – Fri, 11:00 AM – 1:00 PM</small>
+          </div>
+          <div class="field">
+            <label for="b-notes">Tell us about your condition</label>
+            <textarea id="b-notes" name="notes" rows="3" placeholder="e.g. lower back pain for 2 weeks"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Request Appointment</button>
+          <div class="form-msg" role="status" aria-live="polite"></div>
+          <p class="fine-print">By submitting, you agree to be contacted by our clinic regarding your appointment.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT FORM -->
+  <section class="section section--muted" id="contact">
+    <div class="container split">
+      <div class="form-card" style="order:2">
+        <h2 class="form-card-title">Send us a message</h2>
+        <form id="contact-form" novalidate>
+          <div class="field hp"><label>Leave blank</label><input type="text" name="_honey" tabindex="-1" autocomplete="off"></div>
+          <div class="field">
+            <label for="c-name">Name *</label>
+            <input id="c-name" type="text" name="name" required autocomplete="name">
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="c-email">Email *</label>
+              <input id="c-email" type="email" name="email" required autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="c-phone">Phone</label>
+              <input id="c-phone" type="tel" name="phone" autocomplete="tel">
+            </div>
+          </div>
+          <div class="field">
+            <label for="c-message">Message *</label>
+            <textarea id="c-message" name="message" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+          <div class="form-msg" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+      <div style="order:1">
+        <span class="eyebrow">Get In Touch</span>
+        <h2>Questions before we open?</h2>
+        <p>We usually reply within one business day. For anything urgent, please call or WhatsApp us directly.</p>
+        <div class="info-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s7-6.6 7-12a7 7 0 10-14 0c0 5.4 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <div><b>New Address</b>182, Ambica Vihar, Paschim Vihar,<br>New Delhi, Delhi 110087</div>
         </div>
-    </header>
-
-    <!-- Clinic Info -->
-    <section class="py-10 bg-physioLight -mt-10 relative z-20 mx-4 md:mx-auto max-w-7xl rounded-xl shadow-lg border-b-4 border-physioBlue">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-8 text-center md:text-left divide-y md:divide-y-0 md:divide-x divide-gray-200">
-            <div class="flex items-start gap-4 p-2">
-                <div class="bg-white p-3 rounded-full shadow-sm text-physioBlue">
-                    <i class="fa-solid fa-clock text-2xl" aria-hidden="true"></i>
-                </div>
-                <div>
-                    <h3 class="font-bold text-lg text-gray-900">Clinic Hours</h3>
-                    <p class="text-sm text-gray-600 mt-1">Mon - Fri: 11 AM - 1 PM</p>
-                    <p class="text-xs text-physioBlue font-semibold mt-1">Evening by Appointment Only</p>
-                </div>
-            </div>
-            <div class="flex items-start gap-4 p-2 pt-6 md:pt-2">
-                <div class="bg-white p-3 rounded-full shadow-sm text-physioBlue">
-                    <i class="fa-solid fa-user-doctor text-2xl" aria-hidden="true"></i>
-                </div>
-                <div>
-                    <h3 class="font-bold text-lg text-gray-900">Expert Supervision</h3>
-                    <p class="text-sm text-gray-600 mt-1">Dr. Sonal Khera Nagpal</p>
-                    <p class="text-xs text-gray-500 italic">MPT Cardiopulmonary Specialist</p>
-                </div>
-            </div>
-            <div class="flex items-start gap-4 p-2 pt-6 md:pt-2">
-                <div class="bg-white p-3 rounded-full shadow-sm text-physioBlue">
-                    <i class="fa-solid fa-location-dot text-2xl" aria-hidden="true"></i>
-                </div>
-                <div>
-                    <h3 class="font-bold text-lg text-gray-900">Physiotherapy Centre</h3>
-                    <p class="text-sm text-gray-600 mt-1">M39, Guru Harkishan Nagar, Paschim Vihar, Delhi.</p>
-                </div>
-            </div>
+        <div class="info-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>
+          <div><b>Email</b><a href="mailto:drsonal@shivwikholisticcare.com">drsonal@shivwikholisticcare.com</a></div>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-blue-500 font-bold uppercase tracking-wider text-sm mb-2">Our Foundation</h2>
-                <h3 class="text-3xl md:text-4xl font-bold text-gray-900">Physiotherapy & Holistic Care Centre</h3>
-                <div class="w-20 h-1.5 bg-physioGreen mx-auto mt-4 rounded-full"></div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
-                <article class="space-y-6">
-                    <div class="inline-flex items-center gap-3 text-physioBlue mb-2">
-                        <i class="fa-solid fa-leaf text-2xl" aria-hidden="true"></i>
-                        <h3 class="text-2xl font-bold text-gray-900">The Holistic Vision</h3>
-                    </div>
-                    <p class="text-gray-600 leading-relaxed text-lg">
-                        Shivwik Holistic Care is a premier physiotherapy clinic in Paschim Vihar dedicated to restorative health.
-                    </p>
-                    <p class="text-gray-600 leading-relaxed">
-                        We integrate modern Physiotherapy with Naturopathy and Yoga to ensure complete healing of the musculoskeletal and respiratory systems.
-                    </p>
-                    <div class="bg-physioLight p-6 rounded-2xl border-l-4 border-physioBlue">
-                        <p class="text-physioBlue font-medium italic">"Empowering patients through advanced clinical rehabilitation in the heart of West Delhi."</p>
-                    </div>
-                </article>
-
-                <article class="space-y-6">
-                    <div class="inline-flex items-center gap-3 text-physioGreen mb-2">
-                        <i class="fa-solid fa-stethoscope text-2xl" aria-hidden="true"></i>
-                        <h3 class="text-2xl font-bold text-gray-900">Meet Dr. Sonal Khera Nagpal</h3>
-                    </div>
-                    <p class="text-gray-600 leading-relaxed text-lg font-semibold">
-                        MPT (Cardiopulmonary), BPT, NDDY
-                    </p>
-                    <p class="text-gray-600 leading-relaxed">
-                        A specialist in Cardiopulmonary rehabilitation and Orthopedic care, Dr. Sonal integrates evidence-based medicine with Yoga & Naturopathy (NDDY).
-                    </p>
-                    <ul class="space-y-3">
-                        <li class="flex items-center gap-3 text-gray-700">
-                            <i class="fa-solid fa-check-circle text-physioGreen" aria-hidden="true"></i>
-                            <span>Cardiopulmonary Rehab Specialist Paschim Vihar</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-700">
-                            <i class="fa-solid fa-check-circle text-physioGreen" aria-hidden="true"></i>
-                            <span>Chronic Pain & Sciatica Management</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-700">
-                            <i class="fa-solid fa-check-circle text-physioGreen" aria-hidden="true"></i>
-                            <span>Certified Yoga and Naturopathy Consultant</span>
-                        </li>
-                    </ul>
-                </article>
-            </div>
+        <div class="info-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <div><b>Hours</b>Mon – Fri: 11:00 AM – 1:00 PM<br>Sat – Sun: Closed</div>
         </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-physioBlue font-bold uppercase tracking-wider text-sm mb-2">Physiotherapy Services</h2>
-                <h3 class="text-3xl md:text-4xl font-bold text-gray-900">Advanced Treatments in Paschim Vihar</h3>
-                <p class="text-gray-500 mt-4 max-w-2xl mx-auto">Comprehensive rehabilitation tailored to post-surgical recovery and chronic pain management.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-gray-100 group">
-                    <div class="w-14 h-14 bg-physioLight text-physioBlue rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:bg-physioBlue group-hover:text-white">
-                        <i class="fa-solid fa-heart-pulse text-2xl" aria-hidden="true"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-3 text-gray-900">Cardio & Lung Rehab</h4>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Specialized breathing exercises and post-CABG heart recovery programs.</p>
-                </div>
-
-                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-gray-100 group">
-                    <div class="w-14 h-14 bg-green-50 text-physioGreen rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:bg-physioGreen group-hover:text-white">
-                        <i class="fa-solid fa-bone text-2xl" aria-hidden="true"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-3 text-gray-900">Orthopedic Therapy</h4>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Relief for Back Pain, Neck Pain, Arthritis, and Knee Replacements.</p>
-                </div>
-
-                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-gray-100 group">
-                    <div class="w-14 h-14 bg-blue-50 text-physioBlue rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:bg-physioBlue group-hover:text-white">
-                        <i class="fa-solid fa-spa text-2xl" aria-hidden="true"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-3 text-gray-900">Yoga & Naturopathy</h4>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Therapeutic yoga for holistic wellness and lifestyle management.</p>
-                </div>
-            </div>
+        <div class="map-wrap">
+          <iframe title="Shivwik Holistic Care new location map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?cid=9571888292458352168&output=embed"></iframe>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
+</main>
 
-    <!-- Map & Contact -->
-    <section id="contact" class="py-20 bg-gray-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                <div>
-                    <h2 class="text-3xl font-bold mb-6 text-physioLight">Book Appointment</h2>
-                    <p class="text-gray-400 mb-8 leading-relaxed">Book a session at our Paschim Vihar clinic. Secure your spot using the form below or call directly.</p>
-                    
-                    <div class="form-container shadow-2xl border-t-8 border-physioBlue mb-8 bg-white">
-                        <div id="form-loader" class="absolute inset-0 flex items-center justify-center bg-white z-10">
-                            <div class="flex flex-col items-center gap-4">
-                                <i class="fa-solid fa-spinner fa-spin text-4xl text-physioBlue"></i>
-                                <p class="text-gray-500 font-medium">Loading Appointment Form...</p>
-                            </div>
-                        </div>
-                        <iframe 
-                            src="https://docs.google.com/forms/d/e/1FAIpQLSdXyPtX3Ak4z1tbKByhD8V8uJkjYY9uFmcV5DhSLkQ7jZqsHA/viewform?embedded=true" 
-                            title="Appointment Booking Form"
-                            onload="document.getElementById('form-loader').style.display='none'">
-                            Loading…
-                        </iframe>
-                    </div>
+<footer class="site-footer">
+  <div class="container">
+    <p>Existing patients — your appointments stand, just use the new address once we've opened.</p>
+    <p class="copyright">© 2026 Shivwik Holistic Care. All rights reserved.</p>
+  </div>
+</footer>
 
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-phone text-physioBlue text-lg"></i>
-                            <a href="tel:+918340006000" class="hover:text-physioBlue text-lg font-bold">+91 83400 06000</a>
-                        </div>
-                        <address class="flex items-center gap-3 not-italic">
-                            <i class="fa-solid fa-location-dot text-physioBlue text-lg"></i>
-                            <span class="text-gray-300">M39, 2nd Floor, Guru Harkishan Nagar, Paschim Vihar, Delhi 110087</span>
-                        </address>
-                    </div>
-                </div>
+<div class="sticky-cta">
+  <a href="tel:+918340006000" class="btn btn-outline">Call Now</a>
+  <a href="#booking" class="btn btn-primary">Book Appointment</a>
+</div>
 
-                <div class="map-container shadow-2xl">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-map-location-dot text-physioGreen" aria-hidden="true"></i> Clinic Location
-                    </h3>
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d546.8535703440157!2d77.087086!3d28.670464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d05d4c43ce673%3A0x84d62db01db34e28!2sShivwik%20Holistic%20Care%20(Dr%20Sonal%20Khera%20Nagpal%2C%20MPT)!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        title="Google Maps Clinic Location"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <div class="flex flex-col items-center mb-8">
-                <img src="https://lh3.googleusercontent.com/d/18Ma5lZqQm3FZEVN903q57-bW9xQDH5CF" alt="Shivwik Holistic Care Footer Logo" class="footer-logo mb-4" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3063/3063176.png'">
-                <p class="font-bold text-xl mb-1 uppercase tracking-tight">SHIVWIK HOLISTIC CARE</p>
-                <p class="text-physioBlue text-[10px] tracking-[0.2em] uppercase font-bold">Health • Healing • Harmony</p>
-            </div>
-            <div class="text-gray-500 text-xs">
-                <p>&copy; 2025 Shivwik Holistic Care. Dr. Sonal Khera Nagpal.</p>
-                <p class="mt-2">Clinical Hours: 11 AM - 1 PM (M-F) | Evenings by Appt.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        const mobileBtn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        if (mobileBtn) mobileBtn.addEventListener('click', () => menu.classList.toggle('open'));
-    </script>
+<script src="assets/js/forms.js"></script>
 </body>
 </html>
