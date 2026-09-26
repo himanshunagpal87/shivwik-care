@@ -229,7 +229,7 @@ img { max-width: 100%; display: block; }
   .contact-band .container { flex-direction: column; }
   .map-embed { width: 100%; }
   .mobile-cta-bar { display: flex; }
-  body { padding-bottom: 64px; }
+  body { padding-bottom: 78px; }
   .booking-form { padding: 24px; }
 }
 
@@ -246,11 +246,11 @@ img { max-width: 100%; display: block; }
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 14px rgba(0,0,0,0.2);
-  z-index: 55;
+  z-index: 65;
 }
 .whatsapp-float:hover { opacity: 0.92; }
 @media (max-width: 900px) {
-  .whatsapp-float { right: 16px; bottom: 80px; width: 52px; height: 52px; }
+  .whatsapp-float { right: 16px; bottom: 100px; width: 52px; height: 52px; }
 }
 
 .site-nav.open {
