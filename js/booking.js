@@ -11,6 +11,14 @@ const SERVICES = [
   { id: 7, name: "Other" },
 ];
 
+function normalizePhone(raw) {
+  let digits = String(raw).replace(/\D/g, "");
+  if (digits.length === 10) return "91" + digits;
+  if (digits.length === 11 && digits.startsWith("0")) return "91" + digits.slice(1);
+  if (digits.length === 12 && digits.startsWith("91")) return digits;
+  return digits;
+}
+
 async function callRpc(fn, payload) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
     method: "POST",
@@ -67,18 +75,19 @@ function initBookingForm() {
   }
 
   phoneInput.addEventListener("input", () => {
-    if (verifiedPhone && verifiedPhone !== phoneInput.value.replace(/\D/g, "")) {
+    if (verifiedPhone && verifiedPhone !== normalizePhone(phoneInput.value)) {
       resetVerification();
     }
   });
 
   sendCodeBtn.addEventListener("click", async () => {
-    const cleanPhone = phoneInput.value.replace(/\D/g, "");
-    if (cleanPhone.length < 8) {
-      otpStatus.textContent = "Please enter a valid phone number first.";
+    const rawDigits = phoneInput.value.replace(/\D/g, "");
+    if (rawDigits.length < 10) {
+      otpStatus.textContent = "Please enter a valid 10-digit phone number.";
       otpStatus.style.color = "#a3312c";
       return;
     }
+    const cleanPhone = normalizePhone(phoneInput.value);
     sendCodeBtn.disabled = true;
     sendCodeBtn.textContent = "Sending...";
     const result = await callRpc("request_phone_otp", { p_phone: cleanPhone });
@@ -108,7 +117,7 @@ function initBookingForm() {
   });
 
   verifyCodeBtn.addEventListener("click", async () => {
-    const cleanPhone = phoneInput.value.replace(/\D/g, "");
+    const cleanPhone = normalizePhone(phoneInput.value);
     const code = otpCodeInput.value.trim();
     if (code.length !== 6) {
       otpStatus.textContent = "Enter the 6-digit code.";
@@ -145,7 +154,7 @@ function initBookingForm() {
 
     if (data.honeypot) return; // silently drop bot submissions
 
-    const cleanPhone = data.phone.replace(/\D/g, "");
+    const cleanPhone = normalizePhone(data.phone);
     if (!verifiedPhone || verifiedPhone !== cleanPhone) {
       msgEl.textContent = "Please verify your WhatsApp number before submitting.";
       msgEl.className = "form-msg error";
