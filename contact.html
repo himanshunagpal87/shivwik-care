@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact & Book Appointment | Shivwik Holistic Care</title>
+<meta name="description" content="Book a physiotherapy appointment at Shivwik Holistic Care, 182 Ambica Vihar, Paschim Vihar, New Delhi. Call +91 74074 46000 or request a slot online.">
+<link rel="icon" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo"><img src="assets/logo.png" alt="Shivwik Holistic Care"></a>
+    <nav class="site-nav" id="siteNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="tel:+917407446000" class="phone">+91 74074 46000</a>
+      <a href="contact.html" class="btn btn-primary">Book Appointment</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" style="padding: 48px 0;">
+  <div class="container" style="justify-content: center; text-align: center;">
+    <div class="hero-copy" style="max-width: 700px; align-items: center;">
+      <span class="eyebrow">Contact &amp; Booking</span>
+      <h1>Book Your Appointment</h1>
+      <p>Fill out the form below and we'll confirm your slot over WhatsApp &mdash; or call reception directly during clinic hours.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="display: flex; gap: 48px; align-items: flex-start; flex-wrap: wrap; justify-content: center;">
+
+    <form class="booking-form" id="bookingForm" novalidate>
+      <h2>Request an Appointment</h2>
+      <div id="bookingFormMsg" class="form-msg"></div>
+
+      <div class="field">
+        <label for="name">Full Name *</label>
+        <input type="text" id="name" name="name" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="phone">WhatsApp / Phone Number *</label>
+        <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="98765 43210">
+        <span class="field-hint">We'll send your confirmation on this number via WhatsApp.</span>
+      </div>
+      <div class="field">
+        <label for="email">Email (optional)</label>
+        <input type="email" id="email" name="email" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="service_id">Service *</label>
+        <select id="service_id" name="service_id" required>
+          <option value="" disabled selected>Select a service</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="preferred_date">Preferred Date *</label>
+        <input type="date" id="preferred_date" name="preferred_date" required>
+      </div>
+      <div class="field">
+        <label for="preferred_time">Preferred Time *</label>
+        <input type="time" id="preferred_time" name="preferred_time" required>
+        <span class="field-hint">Regular hours: Mon&ndash;Fri 9:30 AM&ndash;1:00 PM, Sat 10:30 AM&ndash;12:30 PM. Evening slots by request.</span>
+      </div>
+      <div class="field">
+        <label for="notes">Notes (optional)</label>
+        <textarea id="notes" name="notes" rows="3" placeholder="Briefly describe your concern"></textarea>
+      </div>
+      <input type="text" name="honeypot" class="hp-field" tabindex="-1" autocomplete="off">
+
+      <button type="submit" class="btn btn-primary">Request Appointment</button>
+    </form>
+
+    <div style="display: flex; flex-direction: column; gap: 24px; max-width: 420px;">
+      <div class="service-card">
+        <h3>Visit Us</h3>
+        <div class="contact-row" style="margin-top: 8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f6b6b" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span style="color: var(--text-soft);">182, Ambica Vihar, Paschim Vihar, New Delhi 110087</span>
+        </div>
+        <div class="contact-row">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f6b6b" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.34 1.79.65 2.65a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.43-1.27a2 2 0 012.11-.45c.86.31 1.75.53 2.65.65A2 2 0 0122 16.92z"/></svg>
+          <a href="tel:+917407446000" style="color: var(--primary); font-weight: 600;">+91 74074 46000</a>
+        </div>
+        <div class="contact-row">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f6b6b" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <span style="color: var(--text-soft);">Mon&ndash;Fri: 9:30 AM&ndash;1:00 PM (evenings by appointment)<br>Saturday: 10:30 AM&ndash;12:30 PM &middot; Sunday: Closed</span>
+        </div>
+        <a href="https://maps.app.goo.gl/LDN7qMHyddyL3egG9" class="btn btn-outline-dark" style="margin-top: 12px; width: fit-content;">Get Directions</a>
+      </div>
+      <div class="map-embed" style="width: 100%; height: 260px; border: 1px solid var(--border);">
+        <iframe title="Shivwik Holistic Care location" loading="lazy" src="https://www.google.com/maps?q=Shivwik+Holistic+Care+182+Ambica+Vihar+Paschim+Vihar&output=embed"></iframe>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>&copy; 2026 Shivwik Holistic Care. All rights reserved.</span>
+    <span>Move Better &middot; Feel Stronger &middot; Live Healthier</span>
+  </div>
+</footer>
+
+<div class="mobile-cta-bar">
+  <a href="tel:+917407446000" class="btn btn-outline-dark">Call</a>
+  <a href="contact.html" class="btn btn-primary">Book</a>
+</div>
+
+<script src="js/booking.js"></script>
+</body>
+</html>
