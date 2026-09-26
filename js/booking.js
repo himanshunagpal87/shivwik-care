@@ -207,6 +207,50 @@ function initBookingForm() {
   });
 }
 
+function initGeneralContactForm() {
+  const form = document.getElementById("generalContactForm");
+  if (!form) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msgEl = document.getElementById("generalContactMsg");
+    const btn = form.querySelector("button[type=submit]");
+    msgEl.className = "form-msg";
+    msgEl.textContent = "";
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    if (data._honey) return; // silently drop bot submissions
+
+    btn.disabled = true;
+    btn.textContent = "Sending...";
+
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/info@shivwikholisticcare.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone || "(not provided)",
+          message: data.message,
+          _subject: "New general inquiry - Shivwik Holistic Care website",
+        }),
+      });
+      if (!res.ok) throw new Error("Request failed");
+
+      msgEl.textContent = "Thank you! We've received your message and will get back to you soon.";
+      msgEl.className = "form-msg success";
+      form.reset();
+    } catch (err) {
+      msgEl.textContent = "Something went wrong. Please email info@shivwikholisticcare.com directly.";
+      msgEl.className = "form-msg error";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Send Message";
+    }
+  });
+}
+
 function initMobileNav() {
   const toggle = document.getElementById("navToggle");
   const nav = document.getElementById("siteNav");
@@ -216,5 +260,6 @@ function initMobileNav() {
 
 document.addEventListener("DOMContentLoaded", () => {
   initBookingForm();
+  initGeneralContactForm();
   initMobileNav();
 });
