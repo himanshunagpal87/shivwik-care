@@ -53,8 +53,18 @@
       </div>
       <div class="field">
         <label for="phone">WhatsApp / Phone Number *</label>
-        <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="98765 43210">
-        <span class="field-hint">We'll send your confirmation on this number via WhatsApp.</span>
+        <div style="display: flex; gap: 8px;">
+          <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="98765 43210" style="flex: 1;">
+          <button type="button" id="sendCodeBtn" class="btn btn-outline-dark" style="white-space: nowrap;">Send Code</button>
+        </div>
+        <span class="field-hint">We'll send a 6-digit verification code on this number via WhatsApp.</span>
+        <div id="otpSection" style="display: none; flex-direction: column; gap: 8px; margin-top: 4px;">
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="otpCode" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit code" style="flex: 1;">
+            <button type="button" id="verifyCodeBtn" class="btn btn-primary">Verify</button>
+          </div>
+          <span id="otpStatus" class="field-hint"></span>
+        </div>
       </div>
       <div class="field">
         <label for="email">Email (optional)</label>
@@ -81,7 +91,7 @@
       </div>
       <input type="text" name="honeypot" class="hp-field" tabindex="-1" autocomplete="off">
 
-      <button type="submit" class="btn btn-primary">Request Appointment</button>
+      <button type="submit" id="submitBookingBtn" class="btn btn-primary" disabled style="opacity: 0.5; cursor: not-allowed;">Verify your number to continue</button>
     </form>
 
     <div style="display: flex; flex-direction: column; gap: 24px; max-width: 420px;">
