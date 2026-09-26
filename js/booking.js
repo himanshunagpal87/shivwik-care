@@ -251,6 +251,66 @@ function initGeneralContactForm() {
   });
 }
 
+const DAY_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const DAY_LONG = { Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday", Thu: "Thursday", Fri: "Friday", Sat: "Saturday", Sun: "Sunday" };
+
+function fmtTime(t) {
+  const [h, m] = t.split(":").map(Number);
+  const suffix = h >= 12 ? "PM" : "AM";
+  const h12 = ((h + 11) % 12) + 1;
+  return `${h12}:${String(m).padStart(2, "0")} ${suffix}`;
+}
+
+function formatDays(days, long) {
+  const sorted = DAY_ORDER.filter((d) => days.includes(d));
+  if (sorted.length === 1) return long ? DAY_LONG[sorted[0]] : sorted[0];
+  const contiguous = sorted.every((d, i) => i === 0 || DAY_ORDER.indexOf(d) === DAY_ORDER.indexOf(sorted[i - 1]) + 1);
+  if (contiguous && sorted.length > 2) return `${sorted[0]}–${sorted[sorted.length - 1]}`;
+  return sorted.map((d) => (long ? DAY_LONG[d] : d)).join(", ");
+}
+
+// Hours come from the same doctors row the WhatsApp bot uses for booking,
+// so the site can never disagree with what the bot will actually accept.
+async function initLiveHours() {
+  const fullEls = document.querySelectorAll("[data-live-hours]");
+  const shortEls = document.querySelectorAll("[data-live-hours-short]");
+  if (!fullEls.length && !shortEls.length) return;
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/doctors?id=eq.1&select=available_days,start_time,end_time,saturday_start_time,saturday_end_time`,
+      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
+    );
+    if (!res.ok) return;
+    const [d] = await res.json();
+    if (!d || !d.start_time || !Array.isArray(d.available_days)) return;
+
+    const weekdays = d.available_days.filter((x) => x !== "Sat" && x !== "Sun");
+    const hasSat = d.available_days.includes("Sat") && d.saturday_start_time;
+    const closed = DAY_ORDER.filter((x) => !d.available_days.includes(x));
+
+    const line1 = `${formatDays(weekdays)}: ${fmtTime(d.start_time)}–${fmtTime(d.end_time)} (evenings by appointment)`;
+    const line2Parts = [];
+    if (hasSat) line2Parts.push(`Saturday: ${fmtTime(d.saturday_start_time)}–${fmtTime(d.saturday_end_time)}`);
+    if (closed.length) line2Parts.push(`${formatDays(closed, true)}: Closed`);
+
+    fullEls.forEach((el) => {
+      el.textContent = "";
+      el.appendChild(document.createTextNode(line1));
+      if (line2Parts.length) {
+        el.appendChild(document.createElement("br"));
+        el.appendChild(document.createTextNode(line2Parts.join(" · ")));
+      }
+    });
+
+    let short = `Regular hours: ${formatDays(weekdays)} ${fmtTime(d.start_time)}–${fmtTime(d.end_time)}`;
+    if (hasSat) short += `, Sat ${fmtTime(d.saturday_start_time)}–${fmtTime(d.saturday_end_time)}`;
+    short += ". Evening slots by request.";
+    shortEls.forEach((el) => { el.textContent = short; });
+  } catch (err) {
+    // keep the static fallback text already in the page
+  }
+}
+
 function initMobileNav() {
   const toggle = document.getElementById("navToggle");
   const nav = document.getElementById("siteNav");
@@ -258,8 +318,35 @@ function initMobileNav() {
   toggle.addEventListener("click", () => nav.classList.toggle("open"));
 }
 
+function initArticleFilters() {
+  const chips = document.querySelectorAll(".filter-chips .chip");
+  const cards = document.querySelectorAll("#articlesGrid .article-card");
+  const empty = document.getElementById("articlesEmpty");
+  if (!chips.length) return;
+
+  function apply(filter) {
+    let shown = 0;
+    cards.forEach((card) => {
+      const match = filter === "all" || card.dataset.type === filter;
+      card.hidden = !match;
+      if (match) shown++;
+    });
+    if (empty) empty.style.display = shown ? "none" : "block";
+  }
+
+  chips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      chips.forEach((c) => c.setAttribute("aria-pressed", c === chip ? "true" : "false"));
+      apply(chip.dataset.filter);
+    });
+  });
+  apply("all");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initBookingForm();
   initGeneralContactForm();
+  initLiveHours();
   initMobileNav();
+  initArticleFilters();
 });

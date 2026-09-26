@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Contact & Book Appointment | Shivwik Holistic Care</title>
 <meta name="description" content="Book a physiotherapy appointment at Shivwik Holistic Care, 182 Ambica Vihar, Paschim Vihar, New Delhi. Call +91 74074 46000 or request a slot online.">
-<link rel="icon" href="assets/logo.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/icons/favicon-48.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/favicon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0f6b6b">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
 <meta property="og:type" content="website">
@@ -57,6 +61,7 @@
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="services.html">Services</a>
+      <a href="articles.html">Articles</a>
       <a href="contact.html" class="active">Contact</a>
     </nav>
     <div class="header-actions">
@@ -122,7 +127,7 @@
       <div class="field">
         <label for="preferred_time">Preferred Time *</label>
         <input type="time" id="preferred_time" name="preferred_time" required>
-        <span class="field-hint">Regular hours: Mon&ndash;Fri 9:30 AM&ndash;1:00 PM, Sat 10:30 AM&ndash;12:30 PM. Evening slots by request.</span>
+        <span class="field-hint" data-live-hours-short>Regular hours: Mon&ndash;Fri 9:30 AM&ndash;1:00 PM, Sat 10:30 AM&ndash;12:30 PM. Evening slots by request.</span>
       </div>
       <div class="field">
         <label for="notes">Notes (optional)</label>
@@ -146,7 +151,7 @@
         </div>
         <div class="contact-row">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f6b6b" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-          <span style="color: var(--text-soft);">Mon&ndash;Fri: 9:30 AM&ndash;1:00 PM (evenings by appointment)<br>Saturday: 10:30 AM&ndash;12:30 PM &middot; Sunday: Closed</span>
+          <span data-live-hours style="color: var(--text-soft);">Mon&ndash;Fri: 9:30 AM&ndash;1:00 PM (evenings by appointment)<br>Saturday: 10:30 AM&ndash;12:30 PM &middot; Sunday: Closed</span>
         </div>
         <a href="https://maps.app.goo.gl/LDN7qMHyddyL3egG9" class="btn btn-outline-dark" style="margin-top: 12px; width: fit-content;">Get Directions</a>
       </div>
