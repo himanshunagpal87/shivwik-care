@@ -69,7 +69,10 @@ img { max-width: 100%; display: block; }
   padding-bottom: 12px;
   flex-wrap: wrap;
 }
+.site-header .logo { display: flex; align-items: center; gap: 12px; }
 .site-header .logo img { height: 48px; width: auto; }
+.site-header .logo-text { font-family: 'Fraunces', Georgia, serif; font-weight: 700; font-size: 21px; color: var(--primary); line-height: 1.15; }
+.site-header .logo-text small { display: block; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 11px; color: var(--text-soft); letter-spacing: 0.02em; }
 .site-nav { display: flex; gap: 30px; flex-wrap: wrap; }
 .site-nav a { font-size: 15px; font-weight: 500; color: var(--text); }
 .site-nav a.active, .site-nav a:hover { color: var(--primary); }
@@ -243,7 +246,9 @@ img { max-width: 100%; display: block; }
 
 /* Mobile: single column, stacked sections, sticky call/book bar */
 @media (max-width: 640px) {
-  .site-header .logo img { height: 40px; }
+  .site-header .logo img { height: 38px; }
+  .site-header .logo-text { font-size: 16px; }
+  .site-header .logo-text small { font-size: 9px; }
   .hero { padding: 48px 0; }
   .hero .container { gap: 28px; }
   .hero h1 { font-size: 28px; line-height: 1.22; }
@@ -273,6 +278,7 @@ img { max-width: 100%; display: block; }
   .hero h1 { font-size: 24px; }
   .eyebrow { font-size: 12px; padding: 6px 12px; }
   .hero-visual { width: 140px; height: 140px; }
+  .site-header .logo-text small { display: none; }
 }
 
 /* Floating WhatsApp button */
