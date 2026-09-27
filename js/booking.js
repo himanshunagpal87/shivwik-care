@@ -318,6 +318,187 @@ function initMobileNav() {
   toggle.addEventListener("click", () => nav.classList.toggle("open"));
 }
 
+/* ---------------------------------------------------------------------
+   Content from the staff dashboard (articles, ratings, specialists).
+   Every block degrades to "nothing shown" if Supabase is unreachable.
+   --------------------------------------------------------------------- */
+const ARTICLE_TYPE_LABELS = { article: "Article", news: "News", workshop: "Workshop", event: "Event" };
+
+async function sbGet(path) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+function escapeHtml(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+// Same minimal format as the dashboard editor: "## Heading", "- bullet",
+// **bold**, blank line = new paragraph. Everything else is escaped.
+function renderArticleBody(md) {
+  const inline = (s) => escapeHtml(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  const out = [];
+  let para = [], list = [];
+  const flushPara = () => { if (para.length) { out.push("<p>" + para.map(inline).join("<br>") + "</p>"); para = []; } };
+  const flushList = () => { if (list.length) { out.push("<ul>" + list.map((l) => "<li>" + inline(l) + "</li>").join("") + "</ul>"); list = []; } };
+  for (const raw of String(md || "").replace(/\r/g, "").split("\n")) {
+    const line = raw.trim();
+    let m;
+    if (!line) { flushPara(); flushList(); continue; }
+    if ((m = line.match(/^#{1,3}\s+(.*)$/))) { flushPara(); flushList(); out.push("<h2>" + inline(m[1]) + "</h2>"); continue; }
+    if ((m = line.match(/^[-*•]\s+(.*)$/))) { flushPara(); list.push(m[1]); continue; }
+    flushList();
+    para.push(line);
+  }
+  flushPara(); flushList();
+  return out.join("");
+}
+
+function fmtMonthYear(d) {
+  return new Date(d).toLocaleDateString("en-IN", { month: "long", year: "numeric", timeZone: "Asia/Kolkata" });
+}
+
+function readMinutes(body) {
+  return Math.max(2, Math.round(String(body || "").split(/\s+/).length / 200));
+}
+
+async function initArticles() {
+  const grid = document.getElementById("articlesGrid");
+  if (!grid) return;
+  try {
+    const rows = await sbGet("articles?select=slug,title,summary,type,body,publish_at,event_date&order=publish_at.desc&limit=60");
+    const frag = document.createDocumentFragment();
+    rows.forEach((a) => {
+      const card = document.createElement("a");
+      card.className = "article-card";
+      card.href = `article.html?slug=${encodeURIComponent(a.slug)}`;
+      card.dataset.type = a.type;
+      const when = a.event_date && (a.type === "workshop" || a.type === "event")
+        ? new Date(a.event_date).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Kolkata" })
+        : `${fmtMonthYear(a.publish_at)} · ${readMinutes(a.body)} min read`;
+      card.innerHTML = `<span class="article-type">${escapeHtml(ARTICLE_TYPE_LABELS[a.type] || a.type)}</span>
+        <h3>${escapeHtml(a.title)}</h3><p>${escapeHtml(a.summary || "")}</p>
+        <span class="article-meta">${escapeHtml(when)}</span>`;
+      frag.appendChild(card);
+    });
+    grid.insertBefore(frag, grid.firstChild);
+  } catch (err) {
+    // static articles already in the page still show
+  }
+  initArticleFilters();
+}
+
+async function initArticlePage() {
+  const root = document.getElementById("articleRoot");
+  if (!root) return;
+  const slug = new URLSearchParams(location.search).get("slug") || "";
+  const notFound = () => {
+    root.innerHTML = `<p>Sorry, we couldn't find that article. It may have been moved or unpublished.</p>
+      <p><a href="articles.html">&larr; See all articles</a></p>`;
+    document.getElementById("articleTitle").textContent = "Article not found";
+  };
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) return notFound();
+  try {
+    const [a] = await sbGet(`articles?slug=eq.${slug}&select=slug,title,summary,type,body,publish_at,event_date,author_name&limit=1`);
+    if (!a) return notFound();
+    const typeLabel = ARTICLE_TYPE_LABELS[a.type] || "Article";
+    document.title = `${a.title} | Shivwik Holistic Care`;
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc && a.summary) desc.setAttribute("content", a.summary);
+    document.getElementById("articleEyebrow").textContent = typeLabel;
+    document.getElementById("articleTitle").textContent = a.title;
+    document.getElementById("articleSummary").textContent = a.summary || "";
+    document.getElementById("articleMeta").textContent =
+      `Shivwik Holistic Care team · ${fmtMonthYear(a.publish_at)} · ${readMinutes(a.body)} min read`;
+    const eventLine = a.event_date && (a.type === "workshop" || a.type === "event")
+      ? `<p class="article-note" style="margin-top:0"><strong>When:</strong> ${escapeHtml(new Date(a.event_date).toLocaleString("en-IN", { dateStyle: "full", timeStyle: "short", timeZone: "Asia/Kolkata" }))} &middot; Shivwik Holistic Care, 182 Ambica Vihar, Paschim Vihar</p>`
+      : "";
+    root.innerHTML = eventLine + renderArticleBody(a.body) + `
+      <div class="hero-actions" style="margin-top: 24px;">
+        <a href="contact.html" class="btn btn-primary">Book an Appointment</a>
+        <a href="https://wa.me/917407446000?text=${encodeURIComponent("Hi, I read your article \"" + a.title + "\" and have a question")}" class="btn btn-outline-dark" target="_blank" rel="noopener">Ask on WhatsApp</a>
+      </div>
+      <p class="article-note">This article is for general information only and is not a substitute for a professional medical assessment. Please consult a qualified professional about your own condition.</p>
+      <p style="margin-top: 24px;"><a href="articles.html">&larr; Back to all articles</a></p>`;
+    const ld = document.createElement("script");
+    ld.type = "application/ld+json";
+    ld.textContent = JSON.stringify({
+      "@context": "https://schema.org", "@type": a.type === "news" ? "NewsArticle" : "Article",
+      headline: a.title, description: a.summary || undefined, datePublished: a.publish_at,
+      author: { "@type": "Organization", name: "Shivwik Holistic Care" },
+      publisher: { "@type": "Organization", name: "Shivwik Holistic Care", logo: { "@type": "ImageObject", url: "https://www.shivwikholisticcare.com/assets/logo.png" } },
+      mainEntityOfPage: `https://www.shivwikholisticcare.com/article.html?slug=${a.slug}`,
+      image: "https://www.shivwikholisticcare.com/assets/og-image.jpg",
+    });
+    document.head.appendChild(ld);
+  } catch (err) {
+    notFound();
+  }
+}
+
+// Shown only once there are enough ratings for the average to mean something.
+const MIN_RATINGS_TO_SHOW = 5;
+
+async function initTestimonials() {
+  const section = document.getElementById("testimonials");
+  if (!section) return;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/public_ratings_summary`, {
+      method: "POST",
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}`, "Content-Type": "application/json" },
+      body: "{}",
+    });
+    if (!res.ok) return;
+    const s = await res.json();
+    if (!s || !s.count || s.count < MIN_RATINGS_TO_SHOW) return;
+    const stars = (n) => "★".repeat(Math.round(n)) + "☆".repeat(5 - Math.round(n));
+    document.getElementById("ratingAverage").textContent = Number(s.average).toFixed(1);
+    document.getElementById("ratingStars").textContent = stars(s.average);
+    document.getElementById("ratingCount").textContent = `from ${s.count} patient rating${s.count === 1 ? "" : "s"} on WhatsApp`;
+    const grid = document.getElementById("testimonialsGrid");
+    grid.innerHTML = (s.testimonials || []).slice(0, 8).map((t) => `
+      <div class="testimonial-card">
+        <span class="rating-stars" aria-label="${t.rating} out of 5 stars">${stars(t.rating)}</span>
+        <span class="testimonial-who">${escapeHtml(t.initials)}</span>
+        <span class="testimonial-when">Verified patient &middot; ${escapeHtml(t.month)}</span>
+      </div>`).join("");
+    section.hidden = false;
+  } catch (err) {
+    // section stays hidden
+  }
+}
+
+async function initSpecialists() {
+  const section = document.getElementById("specialists");
+  if (!section) return;
+  try {
+    // Doctor #1 is the founder, featured separately on the page.
+    const rows = await sbGet("doctors?select=id,name,qualification,department,bio,available_days,start_time,end_time,saturday_start_time,saturday_end_time" +
+      "&is_active=eq.true&show_on_website=eq.true&id=neq.1&order=department,name");
+    if (!rows.length) return;
+    document.getElementById("specialistsGrid").innerHTML = rows.map((d) => {
+      const days = Array.isArray(d.available_days) ? d.available_days : [];
+      const weekdays = days.filter((x) => x !== "Sat" && x !== "Sun");
+      const parts = [];
+      if (weekdays.length && d.start_time) parts.push(`${formatDays(weekdays)}: ${fmtTime(d.start_time)}–${fmtTime(d.end_time)}`);
+      if (days.includes("Sat") && d.saturday_start_time) parts.push(`Sat: ${fmtTime(d.saturday_start_time)}–${fmtTime(d.saturday_end_time)}`);
+      return `<div class="service-card specialist-card">
+        <span class="specialist-dept">${escapeHtml(d.department || "Specialist")}</span>
+        <h3>${escapeHtml(d.name)}</h3>
+        ${d.qualification ? `<span class="specialist-quals">${escapeHtml(d.qualification)}</span>` : ""}
+        ${d.bio ? `<p>${escapeHtml(d.bio)}</p>` : ""}
+        <div class="specialist-hours">${parts.length ? escapeHtml(parts.join(" · ")) : "By appointment"}</div>
+      </div>`;
+    }).join("");
+    section.hidden = false;
+  } catch (err) {
+    // section stays hidden
+  }
+}
+
 function initArticleFilters() {
   const chips = document.querySelectorAll(".filter-chips .chip");
   const cards = document.querySelectorAll("#articlesGrid .article-card");
@@ -348,5 +529,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initGeneralContactForm();
   initLiveHours();
   initMobileNav();
-  initArticleFilters();
+  initArticles();
+  initArticlePage();
+  initTestimonials();
+  initSpecialists();
 });
