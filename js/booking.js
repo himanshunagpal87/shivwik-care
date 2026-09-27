@@ -49,6 +49,11 @@ function initBookingForm() {
   const dateInput = form.querySelector("#preferred_date");
   const todayIST = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
   dateInput.min = todayIST;
+  dateInput.addEventListener("change", async () => {
+    const c = closureOn(await getClosures(), dateInput.value);
+    dateInput.setCustomValidity(c ? `The clinic is closed on ${fmtClosureDates(c)} (${c.note}). Please pick another day.` : "");
+    if (c) dateInput.reportValidity();
+  });
 
   const phoneInput = document.getElementById("phone");
   const sendCodeBtn = document.getElementById("sendCodeBtn");
@@ -164,6 +169,12 @@ function initBookingForm() {
     const slotDateTime = `${data.preferred_date}T${data.preferred_time}:00+05:30`;
     if (new Date(slotDateTime).getTime() <= Date.now()) {
       msgEl.textContent = "Please choose a future date and time.";
+      msgEl.className = "form-msg error";
+      return;
+    }
+    const closed = closureOn(await getClosures(), data.preferred_date);
+    if (closed) {
+      msgEl.textContent = `The clinic is closed on ${fmtClosureDates(closed)} (${closed.note}). Please pick another day.`;
       msgEl.className = "form-msg error";
       return;
     }
@@ -499,6 +510,49 @@ async function initSpecialists() {
   }
 }
 
+/* ---------------------------------------------------------------------
+   Clinic closures (managed in the dashboard). The website books with the
+   founder (doctor 1), so whole-clinic closures and her leave both apply.
+   --------------------------------------------------------------------- */
+const MAIN_DOCTOR_ID = 1;
+const BANNER_LOOKAHEAD_DAYS = 21;
+let closuresPromise = null;
+
+function getClosures() {
+  if (!closuresPromise) {
+    closuresPromise = sbGet("clinic_closures?select=start_date,end_date,doctor_id,note&order=start_date")
+      .then((rows) => rows.filter((c) => c.doctor_id == null || c.doctor_id === MAIN_DOCTOR_ID))
+      .catch(() => []);
+  }
+  return closuresPromise;
+}
+
+function closureOn(closures, isoDate) {
+  return closures.find((c) => isoDate >= c.start_date && isoDate <= c.end_date) || null;
+}
+
+function fmtClosureDates(c) {
+  const f = (s) => new Date(s + "T00:00:00").toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" });
+  return c.start_date === c.end_date ? f(c.start_date) : `${f(c.start_date)} – ${f(c.end_date)}`;
+}
+
+async function initClosureBanner() {
+  const header = document.querySelector(".site-header");
+  if (!header) return;
+  const closures = await getClosures();
+  const today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+  const horizon = new Date(Date.now() + BANNER_LOOKAHEAD_DAYS * 86400000).toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+  const soon = closures.filter((c) => c.end_date >= today && c.start_date <= horizon);
+  if (!soon.length) return;
+  const banner = document.createElement("div");
+  banner.className = "closure-banner";
+  banner.setAttribute("role", "status");
+  banner.textContent = soon
+    .map((c) => `${c.start_date <= today ? "Clinic closed today" + (c.end_date > today ? ` until ${fmtClosureDates({ start_date: c.end_date, end_date: c.end_date })}` : "") : "Clinic closed " + fmtClosureDates(c)}: ${c.note}`)
+    .join(" · ");
+  header.insertAdjacentElement("beforebegin", banner);
+}
+
 function initArticleFilters() {
   const chips = document.querySelectorAll(".filter-chips .chip");
   const cards = document.querySelectorAll("#articlesGrid .article-card");
@@ -533,4 +587,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initArticlePage();
   initTestimonials();
   initSpecialists();
+  initClosureBanner();
 });
