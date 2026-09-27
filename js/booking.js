@@ -8,6 +8,7 @@ const SERVICES = [
   { id: 4, name: "Post Injury Rehabilitation" },
   { id: 5, name: "Geriatric Care" },
   { id: 6, name: "Antenatal & Garbhsanskar" },
+  { id: 13, name: "Cardiopulmonary Rehabilitation" },
   { id: 7, name: "Other" },
 ];
 

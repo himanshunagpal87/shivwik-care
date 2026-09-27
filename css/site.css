@@ -245,6 +245,26 @@ a.article-card { color: var(--text); text-decoration: none; }
   padding: 14px 18px; font-size: 14px; color: var(--text-soft); margin-top: 32px;
 }
 
+/* Featured specialty service */
+.service-featured {
+  display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: start;
+  border: 2px solid var(--primary); background: linear-gradient(135deg, #e8f5f3 0%, var(--surface) 60%);
+  margin-bottom: 24px; padding: 26px 28px;
+}
+.service-featured .service-icon { width: 52px; height: 52px; border-radius: 14px; }
+.service-featured h3 { font-size: 21px; margin: 6px 0 8px; }
+.service-featured p { font-size: 15px; margin: 0 0 8px; }
+.service-featured p:last-child { margin-bottom: 0; }
+.specialty-badge {
+  display: inline-block; background: var(--primary); color: var(--on-primary);
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 999px;
+}
+@media (max-width: 640px) {
+  .service-featured { grid-template-columns: 1fr; gap: 12px; padding: 20px; }
+  .service-featured h3 { font-size: 19px; }
+}
+
 /* Closure notice (from dashboard Closures & Holidays) */
 .closure-banner {
   background: #fff4d6; color: #5a4304; border-bottom: 1px solid #f0dca0;
