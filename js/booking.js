@@ -453,8 +453,9 @@ async function initArticlePage() {
 
 // Shown only once there are enough ratings for the average to mean something.
 const MIN_RATINGS_TO_SHOW = 5;
-// Off until the testing-phase ratings are cleared from the database.
-const RATINGS_SECTION_ENABLED = false;
+// Testing-phase ratings were cleared on 27 Sep 2026; the section appears once
+// real patients have given MIN_RATINGS_TO_SHOW ratings.
+const RATINGS_SECTION_ENABLED = true;
 
 async function initTestimonials() {
   const section = document.getElementById("testimonials");
