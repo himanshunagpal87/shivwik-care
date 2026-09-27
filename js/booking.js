@@ -452,10 +452,12 @@ async function initArticlePage() {
 
 // Shown only once there are enough ratings for the average to mean something.
 const MIN_RATINGS_TO_SHOW = 5;
+// Off until the testing-phase ratings are cleared from the database.
+const RATINGS_SECTION_ENABLED = false;
 
 async function initTestimonials() {
   const section = document.getElementById("testimonials");
-  if (!section) return;
+  if (!section || !RATINGS_SECTION_ENABLED) return;
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/public_ratings_summary`, {
       method: "POST",
