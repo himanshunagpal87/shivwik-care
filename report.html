@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Report | Shivwik Holistic Care</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Securely open your report from Shivwik Holistic Care.">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/icons/favicon-48.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/favicon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0f6b6b">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo">
+      <img src="assets/logo.png" alt="Shivwik Holistic Care logo">
+      <span class="logo-text">Shivwik Holistic Care<small>Physiotherapy &amp; Rehabilitation</small></span>
+    </a>
+    <nav class="site-nav" id="siteNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="articles.html">Articles</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="tel:+917407446000" class="phone">+91 74074 46000</a>
+      <a href="contact.html" class="btn btn-primary">Book Appointment</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" style="padding: 44px 0;">
+  <div class="container" style="justify-content: center; text-align: center;">
+    <div class="hero-copy" style="max-width: 640px; align-items: center;">
+      <span class="eyebrow">Secure Report</span>
+      <h1>Your Report</h1>
+      <p>For your privacy, please confirm it's you before opening your report.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="display: flex; justify-content: center;">
+    <div class="booking-form report-access" id="reportAccess" style="max-width: 460px; width: 100%;">
+      <form id="reportForm" novalidate>
+        <div class="field">
+          <label for="phoneLast4">Last 4 digits of your mobile number *</label>
+          <input type="text" id="phoneLast4" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off" placeholder="e.g. 4521" required>
+        </div>
+        <button type="submit" class="btn btn-primary" id="reportBtn" style="width: 100%;">Open My Report</button>
+        <div id="reportMsg" class="form-msg" role="status"></div>
+      </form>
+      <div id="reportResult" hidden>
+        <p class="report-hello" id="reportHello"></p>
+        <p id="reportDetails" style="color: var(--text-soft);"></p>
+        <a href="#" class="btn btn-primary" id="reportOpen" target="_blank" rel="noopener" style="width: 100%;">Open Report</a>
+        <p class="form-consent" id="reportExpiry"></p>
+      </div>
+      <p class="form-consent" style="margin-top: 16px;">Your report link was sent to you on WhatsApp and works for 7 days. If it has expired, or you have any questions about your report, please <a href="https://wa.me/917407446000?text=Hi%2C%20I%20need%20help%20opening%20my%20report">message us on WhatsApp</a> or call +91 74074 46000. See our <a href="privacy.html">Privacy &amp; Terms</a>.</p>
+    </div>
+  </div>
+</section>
+<footer class="site-footer">
+  <div class="container">
+    <span>&copy; 2026 Shivwik Holistic Care. All rights reserved. &middot; <a href="privacy.html">Privacy &amp; Terms</a></span>
+    <span>Move Better &middot; Feel Stronger &middot; Live Healthier</span>
+  </div>
+</footer>
+
+<div class="mobile-cta-bar">
+  <a href="tel:+917407446000" class="btn btn-outline-dark">Call</a>
+  <a href="contact.html" class="btn btn-primary">Book</a>
+</div>
+
+<a href="https://wa.me/917407446000?text=Hi%2C%20I%27d%20like%20to%20book%20an%20appointment" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="#ffffff"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.85 9.85 0 0012.04 2zm5.8 14.08c-.24.68-1.4 1.3-1.93 1.36-.5.06-1.02.26-3.41-.71-2.89-1.17-4.75-4.12-4.9-4.31-.14-.19-1.17-1.56-1.17-2.97 0-1.41.74-2.1 1-2.39.26-.29.57-.36.76-.36h.55c.18 0 .42-.03.64.49.24.55.81 1.9.88 2.04.07.14.11.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.28-.12.55.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.19.7-.81.88-1.09.18-.28.36-.23.6-.14.24.09 1.54.73 1.8.86.26.14.44.2.5.31.06.11.06.63-.18 1.32z"/></svg>
+</a>
+
+<script src="js/booking.js"></script>
+</body>
+</html>

@@ -557,6 +557,60 @@ async function initClosureBanner() {
   header.insertAdjacentElement("beforebegin", banner);
 }
 
+/* ---------------------------------------------------------------------
+   Secure report page (report.html?t=<token>). The report-access Edge
+   Function checks the token and the last 4 phone digits, then returns a
+   short-lived download link.
+   --------------------------------------------------------------------- */
+async function initReportPage() {
+  const form = document.getElementById("reportForm");
+  if (!form) return;
+  const token = (new URLSearchParams(location.search).get("t") || "").trim();
+  const msg = document.getElementById("reportMsg");
+  const btn = document.getElementById("reportBtn");
+  const input = document.getElementById("phoneLast4");
+  const showMsg = (text, isError) => { msg.textContent = text; msg.className = "form-msg" + (isError ? " error" : " success"); };
+
+  if (!/^[a-f0-9]{32,64}$/i.test(token)) {
+    input.disabled = true; btn.disabled = true;
+    showMsg("This report link is incomplete. Please open it exactly as received on WhatsApp, or ask the clinic to send it again.", true);
+    return;
+  }
+  input.addEventListener("input", () => { input.value = input.value.replace(/\D/g, "").slice(0, 4); });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!/^\d{4}$/.test(input.value)) return showMsg("Please enter the last 4 digits of your mobile number.", true);
+    btn.disabled = true; btn.textContent = "Checking…"; msg.textContent = ""; msg.className = "form-msg";
+    try {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/report-access`, {
+        method: "POST",
+        headers: { apikey: SUPABASE_ANON_KEY, "Content-Type": "application/json" },
+        body: JSON.stringify({ token, phone_last4: input.value }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.url) {
+        showMsg(data.message || "We couldn't open this report. Please contact the clinic.", true);
+        if (res.status === 423 || res.status === 410) input.disabled = true;
+        return;
+      }
+      form.hidden = true;
+      document.getElementById("reportHello").textContent = data.first_name ? `Hello ${data.first_name},` : "Hello,";
+      const when = data.created_at ? new Date(data.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kolkata" }) : "";
+      document.getElementById("reportDetails").textContent = `Your ${data.report_type || "report"}${when ? " from " + when : ""} is ready.`;
+      document.getElementById("reportOpen").href = data.url;
+      document.getElementById("reportExpiry").textContent = data.url_valid_seconds
+        ? `For your privacy, this button works for ${Math.round(data.url_valid_seconds / 60)} minutes. If it stops working, simply reload this page and confirm your digits again.`
+        : "";
+      document.getElementById("reportResult").hidden = false;
+    } catch (err) {
+      showMsg("Connection problem. Please check your internet and try again.", true);
+    } finally {
+      btn.disabled = false; btn.textContent = "Open My Report";
+    }
+  });
+}
+
 function initArticleFilters() {
   const chips = document.querySelectorAll(".filter-chips .chip");
   const cards = document.querySelectorAll("#articlesGrid .article-card");
@@ -592,4 +646,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initTestimonials();
   initSpecialists();
   initClosureBanner();
+  initReportPage();
 });

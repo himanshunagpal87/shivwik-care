@@ -245,6 +245,11 @@ a.article-card { color: var(--text); text-decoration: none; }
   padding: 14px 18px; font-size: 14px; color: var(--text-soft); margin-top: 32px;
 }
 
+/* Secure report page */
+.report-access #phoneLast4 { font-size: 22px; letter-spacing: 8px; text-align: center; }
+.report-hello { font-family: 'Fraunces', Georgia, serif; font-size: 22px; color: var(--primary); margin: 0 0 6px; }
+#reportResult .btn { margin-top: 10px; }
+
 /* Featured specialty service */
 .service-featured {
   display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: start;
