@@ -289,7 +289,7 @@ async function initLiveHours() {
   if (!fullEls.length && !shortEls.length) return;
   try {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/doctors?id=eq.1&select=available_days,start_time,end_time,saturday_start_time,saturday_end_time`,
+      `${SUPABASE_URL}/rest/v1/doctors?id=eq.1&select=available_days,start_time,end_time,saturday_start_time,saturday_end_time,evening_start_time,evening_end_time`,
       { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
     );
     if (!res.ok) return;
@@ -298,9 +298,12 @@ async function initLiveHours() {
 
     const weekdays = d.available_days.filter((x) => x !== "Sat" && x !== "Sun");
     const hasSat = d.available_days.includes("Sat") && d.saturday_start_time;
+    const hasEvening = weekdays.length && d.evening_start_time && d.evening_end_time;
     const closed = DAY_ORDER.filter((x) => !d.available_days.includes(x));
 
-    const line1 = `${formatDays(weekdays)}: ${fmtTime(d.start_time)}–${fmtTime(d.end_time)} (evenings by appointment)`;
+    const line1 = hasEvening
+      ? `${formatDays(weekdays)}: ${fmtTime(d.start_time)}–${fmtTime(d.end_time)} (Morning) · ${fmtTime(d.evening_start_time)}–${fmtTime(d.evening_end_time)} (Evening)`
+      : `${formatDays(weekdays)}: ${fmtTime(d.start_time)}–${fmtTime(d.end_time)} (evenings by appointment)`;
     const line2Parts = [];
     if (hasSat) line2Parts.push(`Saturday: ${fmtTime(d.saturday_start_time)}–${fmtTime(d.saturday_end_time)}`);
     if (closed.length) line2Parts.push(`${formatDays(closed, true)}: Closed`);
@@ -316,7 +319,7 @@ async function initLiveHours() {
 
     let short = `Regular hours: ${formatDays(weekdays)} ${fmtTime(d.start_time)}–${fmtTime(d.end_time)}`;
     if (hasSat) short += `, Sat ${fmtTime(d.saturday_start_time)}–${fmtTime(d.saturday_end_time)}`;
-    short += ". Evening slots by request.";
+    short += hasEvening ? `. Evening: ${fmtTime(d.evening_start_time)}–${fmtTime(d.evening_end_time)}.` : ". Evening slots by request.";
     shortEls.forEach((el) => { el.textContent = short; });
   } catch (err) {
     // keep the static fallback text already in the page
@@ -491,7 +494,7 @@ async function initSpecialists() {
   if (!section) return;
   try {
     // Doctor #1 is the founder, featured separately on the page.
-    const rows = await sbGet("doctors?select=id,name,qualification,department,bio,available_days,start_time,end_time,saturday_start_time,saturday_end_time" +
+    const rows = await sbGet("doctors?select=id,name,qualification,department,bio,available_days,start_time,end_time,saturday_start_time,saturday_end_time,evening_start_time,evening_end_time" +
       "&is_active=eq.true&show_on_website=eq.true&id=neq.1&order=department,name");
     if (!rows.length) return;
     document.getElementById("specialistsGrid").innerHTML = rows.map((d) => {
@@ -499,6 +502,7 @@ async function initSpecialists() {
       const weekdays = days.filter((x) => x !== "Sat" && x !== "Sun");
       const parts = [];
       if (weekdays.length && d.start_time) parts.push(`${formatDays(weekdays)}: ${fmtTime(d.start_time)}–${fmtTime(d.end_time)}`);
+      if (weekdays.length && d.evening_start_time && d.evening_end_time) parts.push(`Evening: ${fmtTime(d.evening_start_time)}–${fmtTime(d.evening_end_time)}`);
       if (days.includes("Sat") && d.saturday_start_time) parts.push(`Sat: ${fmtTime(d.saturday_start_time)}–${fmtTime(d.saturday_end_time)}`);
       return `<div class="service-card specialist-card">
         <span class="specialist-dept">${escapeHtml(d.department || "Specialist")}</span>
