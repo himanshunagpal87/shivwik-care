@@ -90,7 +90,7 @@ ${MARK}
 <header class="site-header">
   <div class="container">
     <a href="${p}" class="logo">
-      <img src="${p}assets/logo.png" alt="Shivwik Holistic Care logo" width="616" height="640">
+      <img src="${p}assets/logo-header.webp" alt="Shivwik Holistic Care logo" width="92" height="96">
       <span class="logo-text">Shivwik Holistic Care<small>Physiotherapy &amp; Rehabilitation</small></span>
     </a>
     <nav class="site-nav" id="siteNav">

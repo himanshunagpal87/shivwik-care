@@ -409,3 +409,6 @@ a.article-card { color: var(--text); text-decoration: none; }
 .breadcrumb { font-size: 13px; color: var(--text-soft); margin-bottom: 20px; }
 .article-body .article-review { font-size: 14px; color: var(--text-soft); border-top: 1px solid var(--border); padding-top: 14px; margin-top: 28px; }
 .hero .article-meta { color: rgba(255,255,255,0.8); }
+
+/* Keyboard focus is always visible */
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
