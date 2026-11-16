@@ -5,7 +5,7 @@
    - Events carry the page type and page title only. Never a name, a phone number or anything typed in a form. */
 (function () {
   const CONFIG = {
-    ga4: "",        // Google Analytics 4 measurement ID, e.g. "G-XXXXXXXXXX"
+    ga4: "G-51VEJWN9ZB",        // Google Analytics 4 measurement ID, e.g. "G-XXXXXXXXXX"
     cloudflare: "7d10a46f3725444d8231115481af1615", // Cloudflare Web Analytics token (public beacon id)
   };
   const CHOICE = "shc-consent";
