@@ -2,9 +2,11 @@
 // Turns the public articles feed into real, crawlable pages.
 //   node tools/build.mjs                build into the repo: articles/<slug>/, articles.html cards, sitemap.xml, feed.xml
 //   node tools/build.mjs --selftest     same input twice gives identical output; odd characters; empty feed; unpublish
-//   node tools/build.mjs --staging DIR  copy the built site to DIR (outside the repo) with noindex and the staging database
+//   node tools/build.mjs --staging DIR  copy the built site to DIR (outside the repo) with noindex and the staging database;
+//                                       add --drafts to include pages from _content/ that are not yet reviewed
+// Service, condition and FAQ pages live in _content/*.md and are published only once their header has a `reviewed:` date.
 // No dependencies and no secrets: it reads the same public feed the website itself reads.
-import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, existsSync, cpSync, mkdtempSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, rmdirSync, readdirSync, existsSync, cpSync, mkdtempSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { dirname, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -78,8 +80,15 @@ const ld = (o) => `<script type="application/ld+json">${JSON.stringify(o).replac
 
 // Same minimal format as the dashboard editor and js/booking.js renderArticleBody (keep the two in step):
 // "## Heading", "- bullet", **bold**, blank line = new paragraph. Everything else is escaped.
-export function renderBody(md) {
-  const inline = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+// **bold** everywhere. Links, [text](/path/) or [text](https://...), only in the site's own pages (prefix given),
+// never in feed articles, whose text is otherwise fully escaped.
+const inlineHtml = (s, prefix = null) => {
+  const html = esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  return prefix === null ? html : html.replace(/\[([^\]]+)\]\((\/[^\s)]*|https:\/\/[^\s)]+)\)/g, (_, text, to) => (to.startsWith('/') ? `<a href="${prefix}${to.slice(1)}">${text}</a>` : `<a href="${to}" rel="noopener">${text}</a>`));
+};
+
+export function renderBody(md, { prefix = null, blocks = [] } = {}) {
+  const inline = (s) => inlineHtml(s, prefix);
   const out = [];
   let para = [], list = [];
   const flushPara = () => { if (para.length) { out.push(`<p>${para.map(inline).join('<br>')}</p>`); para = []; } };
@@ -88,6 +97,7 @@ export function renderBody(md) {
     const line = raw.trim();
     let m;
     if (!line) { flushPara(); flushList(); continue; }
+    if ((m = line.match(/^@@(\d+)@@$/))) { flushPara(); flushList(); out.push(blocks[+m[1]]); continue; }
     if ((m = line.match(/^#{1,3}\s+(.*)$/))) { flushPara(); flushList(); out.push(`<h2>${inline(m[1])}</h2>`); continue; }
     if ((m = line.match(/^[-*•]\s+(.*)$/))) { flushPara(); list.push(m[1]); continue; }
     flushList();
@@ -98,7 +108,7 @@ export function renderBody(md) {
 }
 
 // One page shell for everything this script writes. `depth` is how many folders below the site root the page sits.
-export function layout({ depth = 0, title, description, path, ogType = 'website', nav = '', jsonLd = [], main }) {
+export function layout({ depth = 0, title, description, path, ogType = 'website', nav = '', jsonLd = [], main, noindex = false }) {
   const p = depth ? '../'.repeat(depth) : './';
   const on = (key) => (nav === key ? ' class="active"' : '');
   return `<!doctype html>
@@ -108,7 +118,7 @@ export function layout({ depth = 0, title, description, path, ogType = 'website'
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
-<link rel="canonical" href="${SITE}${path}">
+<link rel="canonical" href="${SITE}${path}">${noindex ? '\n<meta name="robots" content="noindex, nofollow">' : ''}
 <link rel="icon" type="image/png" sizes="32x32" href="${p}assets/icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="48x48" href="${p}assets/icons/favicon-48.png">
 <link rel="apple-touch-icon" sizes="180x180" href="${p}assets/icons/favicon-180.png">
@@ -242,6 +252,82 @@ function articleCard(a) {
       </a>`;
 }
 
+// The site's own pages: _content/services/x.md becomes /services/x/. Header lines (title, description, answer,
+// optional h1, about, whatsapp, reviewed), a line with ---, then the text. "Q: ..." followed by "A: ..." is a question.
+const CONTENT = join(ROOT, '_content');
+function loadContent() {
+  return (existsSync(CONTENT) ? walk(CONTENT) : []).filter((f) => f.endsWith('.md')).sort().map((file) => {
+    const raw = readFileSync(file, 'utf8').replace(/\r/g, '');
+    const cut = raw.indexOf('\n---\n');
+    assert(cut > 0, `${file} needs header lines, a line with ---, then the page text`);
+    const meta = Object.fromEntries(raw.slice(0, cut).split('\n').filter((l) => /^[a-z_0-9]+:/.test(l)).map((l) => [l.slice(0, l.indexOf(':')), l.slice(l.indexOf(':') + 1).trim()]));
+    const slug = file.slice(CONTENT.length + 1, -3).split(sep).join('/');
+    assert(/^[a-z0-9-]+(\/[a-z0-9-]+)*$/.test(slug), `${file}: use lower-case letters, digits and hyphens in file names`);
+    for (const k of ['title', 'description', 'answer']) assert(meta[k], `${file} is missing "${k}:"`);
+    assert(!meta.reviewed || /^\d{4}-\d{2}-\d{2}$/.test(meta.reviewed), `${file}: reviewed must be a date like 2026-11-22`);
+    return { ...meta, slug, body: raw.slice(cut + 5) };
+  });
+}
+
+function contentPage(c, all = []) {
+  const parts = c.slug.split('/');
+  const p = '../'.repeat(parts.length);
+  const path = `/${c.slug}/`;
+  const url = SITE + path;
+  const kind = parts[0] === 'services' ? 'Service' : parts[0] === 'conditions' ? 'Condition' : '';
+  const parent = all.find((x) => x.slug === parts.slice(0, -1).join('/'));
+  const trail = [['Home', '/', ''], ...(kind === 'Service' ? [['Services', '/services.html', 'services.html']] : []), ...(parent ? [[parent.title, `/${parent.slug}/`, `${parent.slug}/`]] : []), [c.title, path, null]];
+  const faqs = [], blocks = [], lines = [];
+  for (const line of String(c.body || '').replace(/\r/g, '').split('\n')) {
+    if (line.startsWith('Q: ')) { faqs.push({ q: line.slice(3).trim(), a: '' }); continue; }
+    if (line.startsWith('A: ') && faqs.length && !faqs.at(-1).a) {
+      faqs.at(-1).a = line.slice(3).trim();
+      blocks.push(`<details class="faq-item"><summary>${esc(faqs.at(-1).q)}</summary><p>${inlineHtml(faqs.at(-1).a, p)}</p></details>`);
+      lines.push(`@@${blocks.length - 1}@@`);
+      continue;
+    }
+    lines.push(line);
+  }
+  const plain = (t) => t.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/\*\*/g, '');
+  const main = `<section class="hero" style="padding: 48px 0;">
+  <div class="container" style="justify-content: center; text-align: center;">
+    <div class="hero-copy" style="max-width: 760px; align-items: center;">
+      ${kind ? `<span class="eyebrow">${kind}</span>` : ''}
+      <h1>${esc(c.h1 || c.title)}</h1>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <article class="article-body">
+      ${crumbs(p, trail.map(([label, , href]) => [label, href]))}
+      ${c.reviewed ? '' : '<p class="draft-banner">Draft for clinical review. Not published.</p>\n      '}<p class="lead-answer">${inlineHtml(c.answer, p)}</p>
+      ${renderBody(lines.join('\n'), { prefix: p, blocks })}
+      ${c.reviewed ? `<p class="article-review">Reviewed by Dr. Sonal Khera Nagpal, MPT (Cardiopulmonary). Last reviewed <time datetime="${c.reviewed}">${esc(longDay(`${c.reviewed}T12:00:00+05:30`))}</time>.</p>` : ''}
+      <div class="hero-actions" style="margin-top: 24px;">
+        <a href="${p}contact.html" class="btn btn-primary">Book an Appointment</a>
+        <a href="${esc(waLink(c.whatsapp || `Hi, I read about ${c.title} on your website and would like to book an assessment`))}" class="btn btn-outline-dark" target="_blank" rel="noopener">Ask on WhatsApp</a>
+      </div>
+      <p class="article-note">This page is general information and is not a substitute for a medical assessment. If your symptoms are severe, sudden or getting worse, please see a doctor.</p>
+    </article>
+  </div>
+</section>`;
+  const jsonLd = [
+    { '@context': 'https://schema.org', '@type': 'MedicalWebPage', '@id': url, url, name: c.title, description: c.description, inLanguage: 'en-IN', ...(c.reviewed ? { lastReviewed: c.reviewed, reviewedBy: REVIEWER } : {}), ...(kind === 'Condition' ? { about: { '@type': 'MedicalCondition', name: c.about || c.title } } : {}) },
+    ...(kind === 'Service' ? [{ '@context': 'https://schema.org', '@type': 'Service', name: c.title, serviceType: 'Physiotherapy', description: c.description, url, provider: { '@id': CLINIC_ID }, areaServed: { '@type': 'City', name: 'New Delhi' } }] : []),
+    ...(faqs.length ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plain(f.a) } })) }] : []),
+    crumbsLd(trail.map(([label, to]) => [label, to])),
+  ];
+  return layout({ depth: parts.length, title: `${c.title} | Shivwik Holistic Care`, description: c.description, path, nav: kind === 'Service' ? 'services' : '', jsonLd, main, noindex: !c.reviewed });
+}
+
+// index.html files this script wrote, wherever they are in the site.
+const generated = (dir) => (existsSync(dir) ? readdirSync(dir, { withFileTypes: true }) : []).flatMap((e) => {
+  if (e.isDirectory()) return /^[._]|^(node_modules|assets|tools|css|js)$/.test(e.name) ? [] : generated(join(dir, e.name));
+  return e.name === 'index.html' && readFileSync(join(dir, e.name), 'utf8').includes(MARK) ? [join(dir, e.name)] : [];
+});
+
 const LD = /(<!-- build:ld:start -->)[\s\S]*?(<!-- build:ld:end -->)/;
 function pageLd(file, html) {
   const name = (html.match(/<title>([^<]*)<\/title>/)?.[1] || '').split(' | ')[0].replace(/&amp;/g, '&').trim();
@@ -257,13 +343,13 @@ const gitDay = (file) => {
   try { return execFileSync('git', ['-C', ROOT, 'log', '-1', '--format=%cs', '--', file], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { return ''; }
 };
 
-function sitemap(articles) {
+function sitemap(articles, content = []) {
   const latest = articles.length ? isoDay(articles[0].publish_at) : '';
   const pages = readdirSync(ROOT).filter((f) => f.endsWith('.html') && !['404.html', 'article.html'].includes(f)).sort()
     .map((f) => ({ loc: f === 'index.html' ? `${SITE}/` : `${SITE}/${f}`, lastmod: f === 'articles.html' && latest ? latest : gitDay(f) }));
   pages.sort((a, b) => (a.loc === `${SITE}/` ? -1 : b.loc === `${SITE}/` ? 1 : 0));
   const posts = articles.map((a) => ({ loc: `${SITE}/articles/${a.slug}/`, lastmod: a.updated_at && isoDay(a.updated_at) > isoDay(a.publish_at) ? isoDay(a.updated_at) : isoDay(a.publish_at) }));
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...pages, ...posts].map((e) => `  <url><loc>${esc(e.loc)}</loc>${e.lastmod ? `<lastmod>${e.lastmod}</lastmod>` : ''}</url>`).join('\n')}\n</urlset>\n`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...pages, ...content.map((c) => ({ loc: `${SITE}/${c.slug}/`, lastmod: c.reviewed })), ...posts].map((e) => `  <url><loc>${esc(e.loc)}</loc>${e.lastmod ? `<lastmod>${e.lastmod}</lastmod>` : ''}</url>`).join('\n')}\n</urlset>\n`;
 }
 
 function feed(articles) {
@@ -289,7 +375,7 @@ ${items}
 }
 
 // A plain summary of the clinic for AI tools that read llms.txt. Keep the facts in step with the pages.
-function llms(articles) {
+function llms(articles, content = []) {
   return `# Shivwik Holistic Care
 
 > Physiotherapy and rehabilitation clinic at 182, Ambica Vihar, Paschim Vihar, New Delhi 110087, India, founded and led by Dr. Sonal Khera Nagpal, BPT, MPT (Cardiopulmonary). Its specialty is cardiopulmonary rehabilitation: after a heart attack or cardiac surgery, for COPD, asthma or post-COVID breathlessness, and after an ICU stay. It also offers manual therapy, sports injury rehabilitation, pain management for back and neck pain and sciatica, post-injury rehabilitation, geriatric care, and antenatal physiotherapy with Garbhsanskar guidance.
@@ -309,7 +395,11 @@ function llms(articles) {
 - [Articles](${SITE}/articles.html): all health articles
 - [Privacy and terms](${SITE}/privacy.html)
 
-## Articles
+${content.length ? `## Services, conditions and questions
+
+${content.map((c) => `- [${c.title}](${SITE}/${c.slug}/): ${c.description}`).join('\n')}
+
+` : ''}## Articles
 
 ${articles.map((a) => `- [${a.title}](${SITE}/articles/${a.slug}/)${a.summary ? `: ${a.summary}` : ''}`).join('\n')}
 `;
@@ -317,16 +407,20 @@ ${articles.map((a) => `- [${a.title}](${SITE}/articles/${a.slug}/)${a.summary ? 
 
 const put = (file, text) => { mkdirSync(dirname(file), { recursive: true }); writeFileSync(file, text, 'utf8'); };
 
-export function build(feedRows, out = ROOT) {
+export function build(feedRows, out = ROOT, { drafts = false, content = loadContent() } = {}) {
   const articles = feedRows.filter((a) => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(a.slug || '') && a.title && a.publish_at)
     .sort((a, b) => new Date(b.publish_at) - new Date(a.publish_at) || a.slug.localeCompare(b.slug));
-  const live = new Set(articles.map((a) => a.slug));
-  const dir = join(out, 'articles');
-  for (const d of existsSync(dir) ? readdirSync(dir) : []) {
-    const page = join(dir, d, 'index.html');
-    if (!live.has(d) && existsSync(page) && readFileSync(page, 'utf8').includes(MARK)) rmSync(join(dir, d), { recursive: true });
+  const pages = content.filter((c) => drafts || c.reviewed);
+  const fileOf = (slug) => join(out, ...slug.split('/'), 'index.html');
+  const wanted = new Set([...articles.map((a) => fileOf(`articles/${a.slug}`)), ...pages.map((c) => fileOf(c.slug))]);
+  // Remove pages this script wrote earlier that are no longer wanted: an unpublished article, a withdrawn page.
+  for (const f of generated(out)) {
+    if (wanted.has(f)) continue;
+    rmSync(f);
+    try { rmdirSync(dirname(f)); } catch { /* the folder still holds other pages */ }
   }
-  for (const a of articles) put(join(dir, a.slug, 'index.html'), articlePage(a));
+  for (const a of articles) put(fileOf(`articles/${a.slug}`), articlePage(a));
+  for (const c of pages) put(fileOf(c.slug), contentPage(c, content));
   // Hand-written pages: only the regions between build markers are rewritten.
   for (const f of readdirSync(ROOT).filter((f) => f.endsWith('.html'))) {
     const src = readFileSync(join(ROOT, f), 'utf8');
@@ -337,9 +431,10 @@ export function build(feedRows, out = ROOT) {
     }
     if (html !== src || out !== ROOT) put(join(out, f), html);
   }
-  put(join(out, 'sitemap.xml'), sitemap(articles));
+  const published = pages.filter((c) => c.reviewed);
+  put(join(out, 'sitemap.xml'), sitemap(articles, published));
   put(join(out, 'feed.xml'), feed(articles));
-  put(join(out, 'llms.txt'), llms(articles));
+  put(join(out, 'llms.txt'), llms(articles, published));
   return articles.length;
 }
 
@@ -355,15 +450,17 @@ async function fetchFeed() {
 const walk = (dir) => readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(dir, e.name)) : [join(dir, e.name)]));
 
 // A full copy for the preview site: never indexed, never claims the live domain, never writes to the live database.
-function staging(dir) {
+function staging(dir, drafts) {
   const { SHC_STAGING_SUPABASE_URL: url, SHC_STAGING_SUPABASE_ANON_KEY: key } = process.env;
   dir = resolve(dir);
   assert(!dir.startsWith(ROOT + sep) && dir !== ROOT, 'the staging folder must be outside the repo');
   assert(url && key, 'set SHC_STAGING_SUPABASE_URL and SHC_STAGING_SUPABASE_ANON_KEY so the preview cannot write to the live database');
   rmSync(dir, { recursive: true, force: true });
-  cpSync(ROOT, dir, { recursive: true, filter: (src) => !/[\\/](\.git|\.github|tools|node_modules)$/.test(src) && !/[\\/]CNAME$/.test(src) });
+  cpSync(ROOT, dir, { recursive: true, filter: (src) => !/[\\/](\.git|\.github|tools|node_modules|_content)$/.test(src) && !/[\\/](CNAME|README\.md)$/.test(src) });
+  if (drafts) { const all = loadContent(); for (const c of all) put(join(dir, ...c.slug.split('/'), 'index.html'), contentPage(c, all)); }
   for (const f of walk(dir).filter((f) => f.endsWith('.html'))) {
-    writeFileSync(f, readFileSync(f, 'utf8').replace('<meta charset="utf-8">', '<meta charset="utf-8">\n<meta name="robots" content="noindex, nofollow">'));
+    const html = readFileSync(f, 'utf8');
+    if (!html.includes('<meta name="robots"')) writeFileSync(f, html.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n<meta name="robots" content="noindex, nofollow">'));
   }
   const js = join(dir, 'js', 'booking.js');
   writeFileSync(js, readFileSync(js, 'utf8').replace(/const SUPABASE_URL = "[^"]+"/, `const SUPABASE_URL = "${url}"`).replace(/const SUPABASE_ANON_KEY = "[^"]+"/, `const SUPABASE_ANON_KEY = "${key}"`));
@@ -395,13 +492,31 @@ function selftest() {
   assert(!readFileSync(join(c, 'articles.html'), 'utf8').includes('data-slug='), 'an empty feed must leave no cards');
   build([rows[0]], a);
   assert(!existsSync(join(a, 'articles', 'a-workshop')), 'an unpublished article must be removed');
+  const content = [
+    { slug: 'services/test-service', title: 'Test Service', description: 'D', answer: 'Short **answer**.', reviewed: '2026-11-01', body: 'See [contact](/contact.html) or [source](https://example.org/x).\n\nQ: A question?\nA: An answer with [a link](/faq/).\n' },
+    { slug: 'services/test-service/sub-page', title: 'Sub Page', description: 'D', answer: 'A.', reviewed: '2026-11-02', body: 'Text' },
+    { slug: 'conditions/test-draft', title: 'Draft', description: 'D', answer: 'A.', reviewed: '', body: 'Text' },
+  ];
+  const d = join(tmp, 'd');
+  build(rows, d, { content });
+  const page = readFileSync(join(d, 'services', 'test-service', 'index.html'), 'utf8');
+  for (const need of ['"FAQPage"', '"Service"', 'href="../../contact.html"', 'href="https://example.org/x" rel="noopener"', '<details class="faq-item"><summary>A question?</summary>', 'Last reviewed <time datetime="2026-11-01">1 November 2026</time>']) assert(page.includes(need), `service page lacks ${need}`);
+  assert(readFileSync(join(d, 'services', 'test-service', 'sub-page', 'index.html'), 'utf8').includes('<a href="../../../services/test-service/">Test Service</a>'), 'sub-page breadcrumb');
+  assert(!existsSync(join(d, 'conditions', 'test-draft')), 'a page without a reviewed date must not be built');
+  assert(readFileSync(join(d, 'sitemap.xml'), 'utf8').includes('/services/test-service/</loc><lastmod>2026-11-01</lastmod>'));
+  build(rows, d, { content, drafts: true });
+  const draft = readFileSync(join(d, 'conditions', 'test-draft', 'index.html'), 'utf8');
+  assert(draft.includes('noindex') && draft.includes('Draft for clinical review'), 'a draft must say so and be noindex');
+  assert(!readFileSync(join(d, 'sitemap.xml'), 'utf8').includes('test-draft'), 'a draft must not be in the sitemap');
+  build(rows, d, { content: content.slice(1) });
+  assert(!existsSync(join(d, 'services', 'test-service', 'index.html')) && existsSync(join(d, 'services', 'test-service', 'sub-page', 'index.html')), 'withdrawing a page must not remove its sub-pages');
   rmSync(tmp, { recursive: true });
   console.log('selftest passed');
 }
 
 const [flag, arg] = process.argv.slice(2);
 if (flag === '--selftest') selftest();
-else if (flag === '--staging') console.log(`staging copy written: ${staging(arg)} files in ${resolve(arg)}`);
+else if (flag === '--staging') console.log(`staging copy written: ${staging(arg, process.argv.includes('--drafts'))} files in ${resolve(arg)}`);
 else {
   const rows = await fetchFeed();
   const built = existsSync(join(ROOT, 'articles')) ? readdirSync(join(ROOT, 'articles')).length : 0;
