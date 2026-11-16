@@ -231,6 +231,33 @@ ${items}
 `;
 }
 
+// A plain summary of the clinic for AI tools that read llms.txt. Keep the facts in step with the pages.
+function llms(articles) {
+  return `# Shivwik Holistic Care
+
+> Physiotherapy and rehabilitation clinic at 182, Ambica Vihar, Paschim Vihar, New Delhi 110087, India, founded and led by Dr. Sonal Khera Nagpal, BPT, MPT (Cardiopulmonary). Its specialty is cardiopulmonary rehabilitation: after a heart attack or cardiac surgery, for COPD, asthma or post-COVID breathlessness, and after an ICU stay. It also offers manual therapy, sports injury rehabilitation, pain management for back and neck pain and sciatica, post-injury rehabilitation, geriatric care, and antenatal physiotherapy with Garbhsanskar guidance.
+
+- Phone and WhatsApp: +91 74074 46000
+- Hours: Monday to Friday 9:30 AM to 1:00 PM and 4:00 PM to 6:00 PM; Saturday 10:30 AM to 12:30 PM; closed on Sunday
+- Appointments: ${SITE}/contact.html (online request with phone verification), by phone, or on WhatsApp
+- Map: https://maps.app.goo.gl/LDN7qMHyddyL3egG9
+- Health articles on this site are reviewed by Dr. Sonal Khera Nagpal and are general information, not a medical assessment.
+
+## Pages
+
+- [Home](${SITE}/): the clinic, its services and patient ratings
+- [About Dr. Sonal Khera Nagpal](${SITE}/about.html): qualifications and hospital background
+- [Services](${SITE}/services.html): what each service covers
+- [Contact and booking](${SITE}/contact.html): address, hours and the appointment form
+- [Articles](${SITE}/articles.html): all health articles
+- [Privacy and terms](${SITE}/privacy.html)
+
+## Articles
+
+${articles.map((a) => `- [${a.title}](${SITE}/articles/${a.slug}/)${a.summary ? `: ${a.summary}` : ''}`).join('\n')}
+`;
+}
+
 const put = (file, text) => { mkdirSync(dirname(file), { recursive: true }); writeFileSync(file, text, 'utf8'); };
 
 export function build(feedRows, out = ROOT) {
@@ -248,6 +275,7 @@ export function build(feedRows, out = ROOT) {
   put(join(out, 'articles.html'), list.replace(CARDS[0], (_, a, b) => `${a}\n${articles.map(articleCard).join('\n')}\n      ${b}`));
   put(join(out, 'sitemap.xml'), sitemap(articles));
   put(join(out, 'feed.xml'), feed(articles));
+  put(join(out, 'llms.txt'), llms(articles));
   return articles.length;
 }
 
