@@ -18,9 +18,54 @@ const CARDS = [/(<!-- build:articles:start -->)[\s\S]*?(<!-- build:articles:end 
 const TYPE_LABELS = { article: 'Article', news: 'News', workshop: 'Workshop', event: 'Event' };
 const IST = 'Asia/Kolkata';
 const OG_IMAGE = `${SITE}/assets/og-image.jpg`;
-const ORG = { '@type': 'Organization', '@id': `${SITE}/#clinic`, name: 'Shivwik Holistic Care', url: `${SITE}/`, logo: { '@type': 'ImageObject', url: `${SITE}/assets/logo.png` } };
+const CLINIC_ID = `${SITE}/#clinic`;
+const DOCTOR_ID = `${SITE}/about.html#dr-sonal`;
+const ORG = { '@type': 'Organization', '@id': CLINIC_ID, name: 'Shivwik Holistic Care', url: `${SITE}/`, logo: { '@type': 'ImageObject', url: `${SITE}/assets/logo.png` } };
 // Every article in the public feed was approved in the staff dashboard; the dashboard records the approver.
-const REVIEWER = { '@type': 'Person', '@id': `${SITE}/about.html#dr-sonal`, name: 'Dr. Sonal Khera Nagpal', honorificSuffix: 'MPT (Cardiopulmonary)', jobTitle: 'Physiotherapist', url: `${SITE}/about.html` };
+const REVIEWER = { '@type': 'Person', '@id': DOCTOR_ID, name: 'Dr. Sonal Khera Nagpal', honorificSuffix: 'MPT (Cardiopulmonary)', jobTitle: 'Physiotherapist', url: `${SITE}/about.html` };
+const SERVICES = ['Cardiopulmonary Rehabilitation', 'Manual Therapy', 'Sports Injury Rehabilitation', 'Pain Management', 'Post Injury Rehabilitation', 'Geriatric Care', 'Antenatal Physiotherapy and Garbhsanskar'];
+const hours = (days, opens, closes) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: days, opens, closes });
+const MON_FRI = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+// The one description of the clinic that every page carries. Hours match the text on the pages.
+const CLINIC = {
+  '@context': 'https://schema.org',
+  '@type': ['MedicalClinic', 'Physiotherapy'],
+  '@id': CLINIC_ID,
+  name: 'Shivwik Holistic Care',
+  description: 'Physiotherapy and rehabilitation clinic in Paschim Vihar, New Delhi, led by Dr. Sonal Khera Nagpal. Its specialty is cardiopulmonary rehabilitation.',
+  url: `${SITE}/`,
+  image: OG_IMAGE,
+  logo: `${SITE}/assets/logo.png`,
+  telephone: '+91-74074-46000',
+  email: 'info@shivwikholisticcare.com',
+  priceRange: '$$',
+  currenciesAccepted: 'INR',
+  address: { '@type': 'PostalAddress', streetAddress: '182, Ambica Vihar, Paschim Vihar', addressLocality: 'New Delhi', addressRegion: 'Delhi', postalCode: '110087', addressCountry: 'IN' },
+  geo: { '@type': 'GeoCoordinates', latitude: 28.66545, longitude: 77.08672 },
+  hasMap: 'https://maps.app.goo.gl/LDN7qMHyddyL3egG9',
+  areaServed: [{ '@type': 'Place', name: 'Paschim Vihar' }, { '@type': 'City', name: 'New Delhi' }],
+  medicalSpecialty: ['Physiotherapy', 'Pulmonary', 'Cardiovascular', 'Musculoskeletal', 'Geriatric'].map((m) => `https://schema.org/${m}`),
+  availableService: SERVICES.map((name) => ({ '@type': 'MedicalTherapy', name })),
+  openingHoursSpecification: [hours(MON_FRI, '09:30', '13:00'), hours(MON_FRI, '16:00', '18:00'), hours(['Saturday'], '10:30', '12:30')],
+  founder: { '@type': 'Person', '@id': DOCTOR_ID, name: 'Dr. Sonal Khera Nagpal' },
+  sameAs: ['https://www.instagram.com/shivwikholisticcare/', 'https://www.instagram.com/dr_breatheeasy/'],
+};
+const WEBSITE = { '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${SITE}/#website`, url: `${SITE}/`, name: 'Shivwik Holistic Care', inLanguage: 'en-IN', publisher: { '@id': CLINIC_ID } };
+const DOCTOR = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': DOCTOR_ID,
+  name: 'Dr. Sonal Khera Nagpal',
+  honorificPrefix: 'Dr.',
+  jobTitle: 'Founder and lead physiotherapist',
+  description: "Physiotherapist with a master's degree (MPT) in cardiopulmonary physiotherapy. Hospital experience: ICU critical care at St. Stephen's Hospital, orthopaedic and neurological rehabilitation at Bhagwan Mahaveer Hospital, and multi-specialty physiotherapy at Bhatia Global Hospital.",
+  image: `${SITE}/assets/dr-sonal.jpg`,
+  url: `${SITE}/about.html`,
+  worksFor: { '@id': CLINIC_ID },
+  hasCredential: ['BPT', 'MPT (Cardiopulmonary)', 'COMT', 'CMP', 'CPT', 'CKT', 'RPYT', 'Garbhsanskar Coach', 'DCPT', 'NCAHP'].map((name) => ({ '@type': 'EducationalOccupationalCredential', name })),
+  memberOf: { '@type': 'Organization', name: 'Indian Association of Physiotherapists' },
+  knowsAbout: ['Cardiopulmonary rehabilitation', 'Pulmonary rehabilitation', 'Manual therapy', 'Sports injury rehabilitation', 'Geriatric physiotherapy', 'Antenatal physiotherapy'],
+};
 const WA_ICON = '<svg width="30" height="30" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.85 9.85 0 0012.04 2zm5.8 14.08c-.24.68-1.4 1.3-1.93 1.36-.5.06-1.02.26-3.41-.71-2.89-1.17-4.75-4.12-4.9-4.31-.14-.19-1.17-1.56-1.17-2.97 0-1.41.74-2.1 1-2.39.26-.29.57-.36.76-.36h.55c.18 0 .42-.03.64.49.24.55.81 1.9.88 2.04.07.14.11.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.28-.12.55.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.19.7-.81.88-1.09.18-.28.36-.23.6-.14.24.09 1.54.73 1.8.86.26.14.44.2.5.31.06.11.06.63-.18 1.32z"/></svg>';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -196,6 +241,17 @@ function articleCard(a) {
       </a>`;
 }
 
+const LD = /(<!-- build:ld:start -->)[\s\S]*?(<!-- build:ld:end -->)/;
+function pageLd(file, html) {
+  const name = (html.match(/<title>([^<]*)<\/title>/)?.[1] || '').split(' | ')[0].replace(/&amp;/g, '&').trim();
+  const out = [];
+  if (file === 'index.html') out.push(WEBSITE);
+  if (['index.html', 'about.html', 'services.html', 'contact.html'].includes(file)) out.push(CLINIC);
+  if (file === 'about.html') out.push(DOCTOR);
+  if (file !== 'index.html') out.push(crumbsLd([['Home', '/'], ...(file.startsWith('article-') ? [['Articles', '/articles.html']] : []), [name, `/${file}`]]));
+  return out.map(ld).join('\n');
+}
+
 const gitDay = (file) => {
   try { return execFileSync('git', ['-C', ROOT, 'log', '-1', '--format=%cs', '--', file], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { return ''; }
 };
@@ -270,9 +326,16 @@ export function build(feedRows, out = ROOT) {
     if (!live.has(d) && existsSync(page) && readFileSync(page, 'utf8').includes(MARK)) rmSync(join(dir, d), { recursive: true });
   }
   for (const a of articles) put(join(dir, a.slug, 'index.html'), articlePage(a));
-  const list = readFileSync(join(ROOT, 'articles.html'), 'utf8');
-  assert.match(list, CARDS[0], CARDS[1]);
-  put(join(out, 'articles.html'), list.replace(CARDS[0], (_, a, b) => `${a}\n${articles.map(articleCard).join('\n')}\n      ${b}`));
+  // Hand-written pages: only the regions between build markers are rewritten.
+  for (const f of readdirSync(ROOT).filter((f) => f.endsWith('.html'))) {
+    const src = readFileSync(join(ROOT, f), 'utf8');
+    let html = src.replace(LD, (_, a, b) => `${a}\n${pageLd(f, src)}\n${b}`);
+    if (f === 'articles.html') {
+      assert.match(html, CARDS[0], CARDS[1]);
+      html = html.replace(CARDS[0], (_, a, b) => `${a}\n${articles.map(articleCard).join('\n')}\n      ${b}`);
+    }
+    if (html !== src || out !== ROOT) put(join(out, f), html);
+  }
   put(join(out, 'sitemap.xml'), sitemap(articles));
   put(join(out, 'feed.xml'), feed(articles));
   put(join(out, 'llms.txt'), llms(articles));
@@ -319,7 +382,7 @@ function selftest() {
   assert.equal(build(rows, a), 2, 'the bad slug must be skipped');
   build(rows, b);
   assert.equal(snapshot(a), snapshot(b), 'same input must give identical output');
-  for (const f of walk(a).filter((f) => f.endsWith('index.html'))) {
+  for (const f of walk(join(a, 'articles'))) {
     const html = readFileSync(f, 'utf8');
     for (const need of ['<title>', '<meta name="description" content="', '<link rel="canonical" href="https://www.shivwikholisticcare.com/articles/']) assert(html.includes(need), `${f} lacks ${need}`);
     assert.equal(html.match(/<h1[ >]/g).length, 1, `${f} must have exactly one h1`);
