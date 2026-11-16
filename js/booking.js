@@ -387,6 +387,9 @@ async function initArticles() {
     const rows = await sbGet("articles?select=slug,title,summary,type,body,publish_at,event_date&order=publish_at.desc&limit=60");
     const frag = document.createDocumentFragment();
     rows.forEach((a) => {
+      // Cards already written into the page by tools/build.mjs link to the real article pages;
+      // this only tops the list up with anything approved since the last build.
+      if (grid.querySelector(`[data-slug="${a.slug}"]`)) return;
       const card = document.createElement("a");
       card.className = "article-card";
       card.href = `article.html?slug=${encodeURIComponent(a.slug)}`;
@@ -416,6 +419,12 @@ async function initArticlePage() {
     document.getElementById("articleTitle").textContent = "Article not found";
   };
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) return notFound();
+  // Old address: once tools/build.mjs has written the real page, name it as canonical and forward to it.
+  const canonical = document.head.appendChild(Object.assign(document.createElement("link"), { rel: "canonical", href: `https://www.shivwikholisticcare.com/articles/${slug}/` }));
+  try {
+    if ((await fetch(`articles/${slug}/`, { method: "HEAD" })).ok) return location.replace(`articles/${slug}/`);
+  } catch (err) { /* offline or not built yet: draw it here as before */ }
+  canonical.remove();
   try {
     const [a] = await sbGet(`articles?slug=eq.${slug}&select=slug,title,summary,type,body,publish_at,event_date,author_name&limit=1`);
     if (!a) return notFound();
