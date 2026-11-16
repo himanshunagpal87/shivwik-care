@@ -417,6 +417,7 @@ async function initArticlePage() {
     root.innerHTML = `<p>Sorry, we couldn't find that article. It may have been moved or unpublished.</p>
       <p><a href="articles.html">&larr; See all articles</a></p>`;
     document.getElementById("articleTitle").textContent = "Article not found";
+    document.head.appendChild(Object.assign(document.createElement("meta"), { name: "robots", content: "noindex" }));
   };
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) return notFound();
   // Old address: once tools/build.mjs has written the real page, name it as canonical and forward to it.
