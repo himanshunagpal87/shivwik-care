@@ -173,6 +173,7 @@ ${main}
   ${WA_ICON}
 </a>
 
+<script src="${p}js/analytics.js" defer></script>
 <script src="${p}js/booking.js"></script>
 </body>
 </html>

@@ -1,6 +1,11 @@
 const SUPABASE_URL = "https://ycxuipirpyjadkavkcrf.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_kOEXCSZkqQMV0MJ8kaa1Gw_v_QaPTdm";
 
+// Send how the visitor reached the site with each booking request. Keep this false until the
+// website_booking_requests table has the five source columns, or the request is rejected.
+const BOOKING_SOURCE_ENABLED = false;
+const track = (name, params) => { if (window.shcTrack) window.shcTrack(name, params); };
+
 const SERVICES = [
   { id: 1, name: "Manual Therapy" },
   { id: 2, name: "Sports Injury Rehabilitation" },
@@ -98,6 +103,7 @@ function initBookingForm() {
     sendCodeBtn.textContent = "Sending...";
     const result = await callRpc("request_phone_otp", { p_phone: cleanPhone });
     if (result.success) {
+      track("otp_requested");
       otpSection.style.display = "flex";
       otpStatus.textContent = "Code sent! It can take up to a minute to arrive on WhatsApp.";
       otpStatus.style.color = "";
@@ -189,6 +195,12 @@ function initBookingForm() {
       notes: data.notes ? data.notes.trim() : null,
       honeypot: data.honeypot || null,
     };
+    if (BOOKING_SOURCE_ENABLED) {
+      try {
+        const src = JSON.parse(sessionStorage.getItem("shc-source") || "{}");
+        for (const k of ["source", "medium", "campaign", "referrer", "landing_page"]) payload[k] = src[k] || null;
+      } catch (err) { /* no source recorded: send the request without one */ }
+    }
 
     submitBtn.disabled = true;
     submitBtn.textContent = "Sending...";
@@ -208,6 +220,7 @@ function initBookingForm() {
 
       msgEl.textContent = "Thank you! Your booking request has been received — you'll get a WhatsApp confirmation within a few minutes.";
       msgEl.className = "form-msg success";
+      track("booking_submitted");
       form.reset();
       resetVerification();
     } catch (err) {
@@ -252,6 +265,7 @@ function initGeneralContactForm() {
 
       msgEl.textContent = "Thank you! We've received your message and will get back to you soon.";
       msgEl.className = "form-msg success";
+      track("contact_form_submitted");
       form.reset();
     } catch (err) {
       msgEl.textContent = "Something went wrong. Please email info@shivwikholisticcare.com directly.";
