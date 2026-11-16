@@ -6,7 +6,7 @@
 (function () {
   const CONFIG = {
     ga4: "",        // Google Analytics 4 measurement ID, e.g. "G-XXXXXXXXXX"
-    cloudflare: "", // Cloudflare Web Analytics token
+    cloudflare: "7d10a46f3725444d8231115481af1615", // Cloudflare Web Analytics token (public beacon id)
   };
   const CHOICE = "shc-consent";
   const here = document.currentScript ? document.currentScript.src : location.href;
