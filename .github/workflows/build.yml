@@ -1,0 +1,44 @@
+# Rebuilds the article pages, sitemap, feed and llms.txt from the public articles feed.
+# Runs every hour, after every change to main, and on demand (Actions tab > Run workflow).
+# It uses no secrets: the feed is the same public one the website reads.
+name: Build articles
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+concurrency:
+  group: build-articles
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # sitemap dates come from each page's last commit
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Self-test
+        run: node tools/build.mjs --selftest
+      - name: Build
+        run: node tools/build.mjs
+      - name: Commit what changed
+        id: commit
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git diff --cached --name-only > "$RUNNER_TEMP/changed.txt"
+          git -c user.name="shc-site-build" -c user.email="shc-site-build@users.noreply.github.com" commit -m "Rebuild articles, sitemap and feed from the dashboard"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Tell search engines (IndexNow)
+        if: steps.commit.outputs.changed == 'true'
+        run: node tools/indexnow.mjs "$RUNNER_TEMP/changed.txt"
