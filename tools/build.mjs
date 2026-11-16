@@ -457,7 +457,26 @@ function staging(dir, drafts) {
   assert(url && key, 'set SHC_STAGING_SUPABASE_URL and SHC_STAGING_SUPABASE_ANON_KEY so the preview cannot write to the live database');
   rmSync(dir, { recursive: true, force: true });
   cpSync(ROOT, dir, { recursive: true, filter: (src) => !/[\\/](\.git|\.github|tools|node_modules|_content)$/.test(src) && !/[\\/](CNAME|README\.md)$/.test(src) });
-  if (drafts) { const all = loadContent(); for (const c of all) put(join(dir, ...c.slug.split('/'), 'index.html'), contentPage(c, all)); }
+  if (drafts) {
+    const all = loadContent();
+    for (const c of all) put(join(dir, ...c.slug.split('/'), 'index.html'), contentPage(c, all));
+    // One list for the reviewer: every page from _content, grouped, with its status.
+    const groups = [['Start here', (c) => !c.slug.includes('/')], ['Services', (c) => c.slug.startsWith('services/')], ['Conditions', (c) => c.slug.startsWith('conditions/')]];
+    const list = groups.map(([name, pick]) => `<h2>${name}</h2>
+      <ul>
+        ${all.filter(pick).map((c) => `<li><a href="${c.slug}/">${esc(c.title)}</a> (${c.reviewed ? `reviewed ${esc(c.reviewed)}` : 'draft, awaiting review'})</li>`).join('\n        ')}
+      </ul>`).join('\n      ');
+    put(join(dir, 'review.html'), layout({ title: 'Pages for review | Shivwik Holistic Care', description: 'Draft pages awaiting clinical review.', path: '/review.html', noindex: true, main: `<section class="section">
+  <div class="container">
+    <article class="article-body">
+      <h1>Pages for review</h1>
+      <p class="draft-banner">This is a private preview. None of these pages is on the live website.</p>
+      <p>There are ${all.length} pages. Please read each one and send back any change, however small. A page goes live only after Dr. Sonal approves it, and it will then show her name and the review date.</p>
+      ${list}
+    </article>
+  </div>
+</section>` }));
+  }
   for (const f of walk(dir).filter((f) => f.endsWith('.html'))) {
     const html = readFileSync(f, 'utf8');
     if (!html.includes('<meta name="robots"')) writeFileSync(f, html.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n<meta name="robots" content="noindex, nofollow">'));
