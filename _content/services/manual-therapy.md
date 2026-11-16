@@ -3,7 +3,7 @@ h1: Manual therapy for neck, shoulder and back pain
 description: Hands-on physiotherapy in Paschim Vihar, Delhi: joint mobilisation, myofascial release and soft-tissue work for stiffness and pain.
 answer: Manual therapy is hands-on physiotherapy. The physiotherapist uses joint mobilisation, myofascial release and soft-tissue techniques to ease stiffness and pain and help a joint move more freely. At Shivwik Holistic Care in Paschim Vihar it is combined with exercises, so that the improvement is carried into your daily movement.
 whatsapp: Hi, I read about manual therapy on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## What is manual therapy used for?
 

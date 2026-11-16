@@ -3,7 +3,7 @@ h1: Rehabilitation after surgery, fracture or injury
 description: Staged physiotherapy in Paschim Vihar, Delhi after orthopaedic surgery, joint replacement, fracture or major injury, planned with your surgeon's advice.
 answer: Rehabilitation after surgery, a fracture or a major injury restores movement, strength and confidence in stages. At Shivwik Holistic Care in Paschim Vihar the plan follows your surgeon's or doctor's instructions and progresses as the tissue heals and your ability returns.
 whatsapp: Hi, I read about rehabilitation after surgery or injury on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## Who is this for?
 

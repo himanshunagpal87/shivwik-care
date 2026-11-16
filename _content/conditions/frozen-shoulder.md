@@ -4,7 +4,7 @@ description: Physiotherapy for frozen shoulder in Paschim Vihar, Delhi: pain rel
 answer: Frozen shoulder is a condition in which the shoulder becomes painful and then stiff, often for many months. Physiotherapy may help by easing pain, keeping the joint moving and guiding stretches that match the stage you are in. At Shivwik Holistic Care in Paschim Vihar treatment begins with an assessment of your shoulder.
 about: Frozen shoulder (adhesive capsulitis)
 whatsapp: Hi, I read about frozen shoulder physiotherapy on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## What is frozen shoulder?
 

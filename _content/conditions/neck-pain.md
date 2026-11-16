@@ -4,7 +4,7 @@ description: Physiotherapy for neck pain, stiffness and cervical pain in Paschim
 answer: Neck pain and stiffness often come from posture, long screen time and muscle tension, and usually respond to movement, exercise and better daily habits. Physiotherapy at Shivwik Holistic Care in Paschim Vihar includes an assessment, manual therapy for stiff joints and tight muscles, and exercises you can continue at home.
 about: Neck pain
 whatsapp: Hi, I read about neck pain physiotherapy on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## What causes neck pain?
 

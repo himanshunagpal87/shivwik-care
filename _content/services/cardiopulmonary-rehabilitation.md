@@ -3,7 +3,7 @@ h1: Cardiopulmonary rehabilitation in Paschim Vihar, Delhi
 description: Supervised heart and lung rehabilitation in Paschim Vihar, New Delhi: after a heart attack or bypass, for COPD, asthma and post-COVID breathlessness.
 answer: Cardiopulmonary rehabilitation is a supervised programme of breathing exercises, graded physical activity and day-to-day guidance for people with heart or lung conditions. At Shivwik Holistic Care in Paschim Vihar it is led by Dr. Sonal Khera Nagpal, whose master's degree (MPT) is in cardiopulmonary physiotherapy, and it is planned around your doctor's advice.
 whatsapp: Hi, I read about cardiopulmonary rehabilitation on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## Who is cardiopulmonary rehabilitation for?
 

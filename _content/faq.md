@@ -3,7 +3,7 @@ h1: Questions patients ask us
 description: Booking, timings, your first visit and what we treat at Shivwik Holistic Care, a physiotherapy clinic in Paschim Vihar, New Delhi.
 answer: Shivwik Holistic Care is a physiotherapy and rehabilitation clinic at 182, Ambica Vihar, Paschim Vihar, New Delhi, led by Dr. Sonal Khera Nagpal. You can book online, on WhatsApp or by phone on +91 74074 46000. The clinic is open Monday to Saturday and closed on Sunday.
 whatsapp: Hi, I read your FAQ page and have a question
-reviewed:
+reviewed: 2026-11-16
 ---
 ## Booking and timings
 

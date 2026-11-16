@@ -3,7 +3,7 @@ h1: Antenatal physiotherapy and Garbhsanskar guidance
 description: Pregnancy physiotherapy in Paschim Vihar, Delhi for back and pelvic pain, posture, breathing and safe exercise, with Garbhsanskar wellness guidance.
 answer: Antenatal physiotherapy helps with the aches, posture changes and breathing demands of pregnancy through safe exercise, positioning and advice. At Shivwik Holistic Care in Paschim Vihar it is offered by Dr. Sonal Khera Nagpal, who is also a certified Garbhsanskar coach, and it follows your obstetrician's advice.
 whatsapp: Hi, I read about antenatal physiotherapy on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## What can antenatal physiotherapy help with?
 

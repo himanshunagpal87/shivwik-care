@@ -3,7 +3,7 @@ h1: Physiotherapy for back pain, neck pain and other long-term pain
 description: Assessment-led physiotherapy in Paschim Vihar, Delhi for long-standing back pain, neck pain, sciatica and other persistent muscle and joint pain.
 answer: Physiotherapy for long-term pain starts with finding out what is driving your pain, then combines hands-on treatment, exercise and changes to daily habits to help you move with more comfort. Shivwik Holistic Care in Paschim Vihar treats persistent back and neck pain, sciatica and other muscle and joint pain.
 whatsapp: Hi, I read about physiotherapy for long-term pain on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## What kinds of pain do you treat?
 

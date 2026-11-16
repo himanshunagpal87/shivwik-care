@@ -3,7 +3,7 @@ h1: Cardiac rehabilitation after a heart attack or bypass surgery
 description: Supervised cardiac rehabilitation in Paschim Vihar, Delhi after a heart attack, angioplasty or bypass surgery, planned around your cardiologist's advice.
 answer: Cardiac rehabilitation is a supervised programme of graded exercise, breathing work and guidance that helps you return to daily activity after a heart attack, angioplasty or bypass surgery. At Shivwik Holistic Care in Paschim Vihar it begins with an assessment and is planned around your cardiologist's advice.
 whatsapp: Hi, I read about cardiac rehabilitation after a heart attack or bypass on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## Why is rehabilitation advised after a heart event?
 

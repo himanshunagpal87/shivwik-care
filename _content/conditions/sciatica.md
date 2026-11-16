@@ -4,7 +4,7 @@ description: Physiotherapy for sciatica and leg pain from the lower back in Pasc
 answer: Sciatica is pain that travels from the lower back or buttock down the leg, caused by irritation of the sciatic nerve. It often settles over some weeks. Physiotherapy may help with positions that ease the pain, exercises to keep you moving, and a gradual return to activity. Shivwik Holistic Care in Paschim Vihar begins with a nerve and movement assessment.
 about: Sciatica
 whatsapp: Hi, I read about sciatica physiotherapy on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## What does sciatica feel like?
 

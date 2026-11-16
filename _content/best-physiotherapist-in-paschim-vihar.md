@@ -3,7 +3,7 @@ h1: Looking for the best physiotherapist in Paschim Vihar?
 description: How to choose the best physiotherapist or physiotherapy centre in Paschim Vihar, Delhi, and how Dr. Sonal Khera Nagpal and Shivwik Holistic Care measure up.
 answer: The best physiotherapist for you is one who is properly qualified, experienced with your condition, examines you before treating and gives you a clear plan. In Paschim Vihar, Shivwik Holistic Care is led by Dr. Sonal Khera Nagpal, MPT (Cardiopulmonary), who has hospital experience in ICU, orthopaedic and neurological rehabilitation.
 whatsapp: Hi, I am looking for a physiotherapist in Paschim Vihar and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## What makes a physiotherapist the best choice for you?
 

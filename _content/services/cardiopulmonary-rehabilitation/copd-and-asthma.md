@@ -4,7 +4,7 @@ description: Breathing exercises, airway clearance and graded activity for COPD 
 answer: Pulmonary rehabilitation combines breathing techniques, airway clearance and graded exercise to help people with COPD, asthma and other long-term lung conditions manage breathlessness and stay active. At Shivwik Holistic Care in Paschim Vihar it is led by a physiotherapist trained in cardiopulmonary care and works alongside your chest physician's treatment.
 about: Chronic obstructive pulmonary disease and asthma
 whatsapp: Hi, I read about pulmonary rehabilitation for COPD and asthma on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## How can physiotherapy help with COPD or asthma?
 

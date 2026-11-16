@@ -3,7 +3,7 @@ h1: Sports injury physiotherapy in Paschim Vihar
 description: Rehabilitation for sprains, strains and overuse injuries in Paschim Vihar, Delhi, with a staged return to sport and training.
 answer: Sports injury physiotherapy helps you recover from sprains, strains, overuse problems and post-surgical injuries, and return to your sport in stages. At Shivwik Holistic Care in Paschim Vihar the plan starts with an assessment and builds from pain relief to strength, control and sport-specific training.
 whatsapp: Hi, I read about sports injury physiotherapy on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## Which injuries do you see?
 

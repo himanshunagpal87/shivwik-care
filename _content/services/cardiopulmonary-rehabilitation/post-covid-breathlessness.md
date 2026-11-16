@@ -4,7 +4,7 @@ description: Physiotherapy in Paschim Vihar, Delhi for breathlessness, fatigue a
 answer: Some people stay breathless, tired or weak for weeks or months after COVID or another chest infection. Physiotherapy may help through breathing exercises, carefully paced activity and gradual strengthening. At Shivwik Holistic Care in Paschim Vihar we assess you first and set the pace to how your body responds.
 about: Post COVID-19 condition
 whatsapp: Hi, I read about post-COVID physiotherapy on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## What problems do people report after COVID?
 

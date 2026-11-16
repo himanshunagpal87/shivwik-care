@@ -4,7 +4,7 @@ description: Assessment and physiotherapy for lower back pain in Paschim Vihar, 
 answer: Most lower back pain is not caused by serious disease and improves with staying active, the right exercises and changes to daily habits. Physiotherapy at Shivwik Holistic Care in Paschim Vihar starts with an assessment to find what is aggravating your back, then combines hands-on treatment with a graded exercise plan.
 about: Low back pain
 whatsapp: Hi, I read about back pain physiotherapy on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## What causes lower back pain?
 

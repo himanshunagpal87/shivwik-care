@@ -4,7 +4,7 @@ description: Physiotherapy for knee pain, osteoarthritis and recovery after knee
 answer: Physiotherapy for knee pain strengthens the muscles that support the knee, improves movement and helps you stay active. After knee replacement surgery it restores bending, straightening, strength and walking in stages, following your surgeon's advice. Shivwik Holistic Care in Paschim Vihar offers both, beginning with an assessment.
 about: Knee pain and knee osteoarthritis
 whatsapp: Hi, I read about physiotherapy for knee pain and knee replacement on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## Physiotherapy for knee pain and osteoarthritis
 

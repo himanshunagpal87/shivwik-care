@@ -4,7 +4,7 @@ description: Stroke rehabilitation physiotherapy in Paschim Vihar, Delhi: regain
 answer: After a stroke, physiotherapy helps a person relearn movement, balance and walking, and regain as much independence in daily tasks as possible. Rehabilitation works best when it starts early and continues regularly. At Shivwik Holistic Care in Paschim Vihar the programme is planned with the family and follows the neurologist's advice.
 about: Stroke
 whatsapp: Hi, I read about stroke rehabilitation physiotherapy on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## What can physiotherapy help with after a stroke?
 

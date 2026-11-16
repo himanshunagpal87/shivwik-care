@@ -3,7 +3,7 @@ h1: Physiotherapy for seniors: balance, strength and fall prevention
 description: Gentle, adapted physiotherapy for older adults in Paschim Vihar, Delhi: balance training, strength, walking and fall prevention.
 answer: Physiotherapy for seniors uses gentle strength, balance and walking exercises to help older adults stay steady, mobile and independent, and to lower the risk of falls. At Shivwik Holistic Care in Paschim Vihar each programme is adapted to the person's health, ability and home situation.
 whatsapp: Hi, I read about physiotherapy for seniors on your website and would like to book an assessment
-reviewed:
+reviewed: 2026-11-16
 ---
 ## Who is this for?
 
